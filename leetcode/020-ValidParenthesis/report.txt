@@ -1,0 +1,6 @@
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+
+Solution:
+A classic problem about stack.
+Read chars one by one. If it's a left parenthesis, push it into stack; if it's a right parenthesis, pop the top element of the stack and see if they match.

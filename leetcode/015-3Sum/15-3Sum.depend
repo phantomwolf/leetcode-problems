@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1484832418 source:d:\nathan\documents\workspace\good-good-study\leetcode\15-3sum\main.cpp
+	<algorithm>
+	<iostream>
+	<vector>
+	<unordered_set>
+

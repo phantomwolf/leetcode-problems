@@ -1,0 +1,2 @@
+i < r < j and r is the root of the tree
+e(i, j) = e(i, r-1) + e(r+1, j) + (p(i) + p(i+1) + ... + p(j-1) + p(j)) + (q(i-1) + q(i) + q(i+2) + ... + q(j-1) + q(j))

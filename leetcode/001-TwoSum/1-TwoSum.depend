@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1479826196 source:d:\nathan\documents\workspace\leetcode\problems\1-twosum\main.cpp
+	<iostream>
+	<vector>
+	<unordered_map>
+

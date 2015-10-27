@@ -1,0 +1,43 @@
+罗马数字的规则：
+I: 1
+V: 5
+X: 10
+L: 50
+C: 100
+D: 500
+M: 1,000
+
+所有可能的组合：
+IV，IX
+XL，XC
+CD，CM
+
+
+可能的改进：
+使用二分法查找正确的i
+
+class Solution {
+public:
+    static const size_t length = 13;
+    static int values[length];
+    static char* strs[length];
+
+    string intToRoman(int num) {
+        string res;
+        size_t begin = 0;
+        while (num != 0) {
+            for (size_t i=begin; i < Solution::length; ++i) {
+                if (num >= Solution::values[i]) {
+                    num -= Solution::values[i];
+                    res += Solution::strs[i];
+                    begin = i;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+int Solution::values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+char* Solution::strs[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};q

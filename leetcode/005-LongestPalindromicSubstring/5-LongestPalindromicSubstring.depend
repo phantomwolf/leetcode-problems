@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1482229016 source:/home/nathan/workspace/good-good-study/leetcode/5-LongestPalindromicSubstring/main.cpp
+	<iostream>
+	"Solution3.h"
+
+1482229119 source:/home/nathan/workspace/good-good-study/leetcode/5-LongestPalindromicSubstring/src/Solution3.cpp
+	"Solution3.h"
+
+1482229215 /home/nathan/workspace/good-good-study/leetcode/5-LongestPalindromicSubstring/include/Solution3.h
+	<string>
+

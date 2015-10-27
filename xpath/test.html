@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+</head>
+</head>
+
+<body>
+
+  <bookstore>
+  <book>
+    <title lang="en">Harry Potter</title>
+      <price value="29.99" />
+  </book>
+  <book>
+    <title lang="en">Learning XML</title>
+      <price value="39.95" />
+  </book>
+  </bookstore>
+  <script type="text/javascript" charset="utf-8">
+    var res = document.evaluate("//bookstore/book[price>35.00]", document, null, XPathResult.ANY_TYPE, null);
+    var node = res.iterateNext();
+    alert(node.textContent);
+  </script>
+</body>
+</html>

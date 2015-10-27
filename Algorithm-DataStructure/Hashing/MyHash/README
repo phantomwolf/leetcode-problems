@@ -1,0 +1,1 @@
+A simple hash table class: MyHash. It uses multiplication hash function and open address collision handling.

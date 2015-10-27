@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1487129620 source:/home/nathan/workspace/good-good-study/Algorithms/ArrayRotation/main.cpp
+	<iostream>
+	<numeric>
+

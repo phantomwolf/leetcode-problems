@@ -1,0 +1,11 @@
+{
+    "server":"127.0.0.1",
+    "server_port":11257,
+    "local_port":8080,
+    "password":"<password>",
+    "timeout":60,
+    "fast_open":true,
+    "reuse_port":true,
+    "mode":"tcp_and_udp",
+    "method":"<method>"
+}

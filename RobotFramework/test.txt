@@ -1,0 +1,19 @@
+*** Settings ***
+Library       Selenium2Library
+
+*** Variables ***
+${URL}        http://www.baidu.com
+
+*** Test Cases ***
+My First Test
+  [Documentation]   Something here
+  My Keyword        baka    20
+  Open Browser      ${URL}
+  Input Text        xpath=//input[@id="kw"]   美女
+  Click Button      xpath=//input[@id="su"]
+  Close Browser
+
+*** Keyword ***
+My Keyword
+  [Arguments]   ${name}   ${age}
+  Log           ${name}:${age}
