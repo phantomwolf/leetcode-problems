@@ -33,7 +33,7 @@ Longest Increasing Subsequence：在一个序列（比如一个数组）中，�
 
 LCS
 ++++++++++++++++++++
-Longest Common Subsequence：给定2个序列，找出它们最长的公共子序列，求其长度。子序列不要求连续。
+描述：Longest Common Subsequence：给定2个序列，找出它们最长的公共子序列，求其长度。子序列不要求连续。LCS可用于表示两个字符串的相似度
 
 Edit Distance
 ++++++++++++++++++++
@@ -52,3 +52,31 @@ Edit Distance
     edit_distance(str1, m, str2, n) == 1 + min(edit_distance(str1, m, str2, n - 1), // 插入
                                                edit_distance(str1, m - 1, str2, n), // 删除
                                                edit_distance(str1, m - 1, str2, n - 1)) // 替换
+
+Min Cost Path
+++++++++++++++++++++
+给定一个代价矩阵，矩阵中每个元素都表示经过该位置的代价。给定其中一个位置(m, n)，求从(0, 0)到达(m, n)所需的最小代价，以及路线。
+
+.. image:: min_cost_path.png
+
+最优子结构
+~~~~~~~~~~~~~~
+要到达(m, n)，必须要经过3个位置中的1个：(m-1, n-1), (m-1, n), (m, n-1)。所以到达(m, n)的最小代价，等于到达这3个位置中代价的最小值，加上(m, n)的代价。由此，问题转化为子问题的最优解。
+
+重叠子问题
+~~~~~~~~~~~~~~
+设min_cost(m, n)为到达(m, n)的最小代价，cost为代价矩阵，那么递归解为::
+
+    min_cost(m, n) = cost[m][n] + min(min_cost(m - 1, n - 1),
+                                      min_cost(m - 1, n),
+                                      min_cost(m, n - 1));
+
+                                    mC(2, 2)
+                          /            |           \
+                         /             |            \             
+                 mC(1, 1)           mC(1, 2)             mC(2, 1)
+              /     |     \       /     |     \           /     |     \ 
+             /      |      \     /      |      \         /      |       \
+       mC(0,0) mC(0,1) mC(1,0) mC(0,1) mC(0,2) mC(1,1) mC(1,0) mC(1,1) mC(2,0) 
+
+可见，有些结点的代价被重复计算。如果问题的规模扩大，重复的结点会更多。因此，我们可以使用动态规划。
