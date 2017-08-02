@@ -216,10 +216,25 @@ LongestBitonicSubsequence
 此题可时为LIS(Longest Increasing Subsequence)问题的变种。不同于LIS序列，Bitonic序列先增后减。因此我们设置两个数组lis和lds，lis保存以array[i]结尾的Longest Increasing Subsequence的长度，lds保存以array[i]开头的Longest Decreasing Subsequence的长度。max(lis[i] + lds[i] - 1)就是我们要求的结果。
 
 
-Palindrome Partitioning
+17 Palindrome Partitioning
 ++++++++++++++++++++++++++++++++++++++++++++++
 将一个字符串分为几段，如果每段都是一个回文(Palindrome)，那么这种划分方案叫做Palindrome Partitioning。给定一个字符串，求如何划分最少的次数，使每段都是一个回文。
 
 分析
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 已知：一个长度为1的字符串永远是回文；一个长度为2的字符串，如果两个字符相等，那么它是回文。一个回文，可以通过在左右两边各添加一个相同的字符，来扩展成一个较大的回文。
+
+
+18 Partition Problem
+++++++++++++++++++++++++++++++++++++++++++++++
+分区问题(Partition Problem)是决定一个集合是否可以被分为两个子集，使得两者的和相等。
+
+分析
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+计算整个数组的和sum，如果是奇数，那么不可能有2个子集的和相等(因为元素均为整数，不可能加起来等于一个小数)。
+
+如果整个数组的和sum为偶数，找出一个子集，使其元素和为sum/2即可。
+
+设is_subset_sum(int arr[], int n, int sum)返回布尔值，表示长度为n的数组arr[]是否可以分为两个子集，使它们的和相等。和之前的题类似，分两中情况::
+
+    is_subset_sum(int arr[], int n, int sum) = is_subset_sum(int arr[], int n, int sum)
