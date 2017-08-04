@@ -14,6 +14,8 @@ int solveWordWrap(int lens[], int n, int M)
     int lc[n][n];
     // c[i]: total cost of optimal arrangement of words
     int c[n + 1];
+    // s[i]: j + 1
+    int s[n + 1];
 
     sum[0] = 0;
     for (int i = 0; i < n; ++i) {
@@ -46,14 +48,18 @@ int solveWordWrap(int lens[], int n, int M)
     }
 
     c[0] = 0;
+    s[0] = 0;
     for (int j = 0; j <= n; ++j) {
         int min = INT_MAX;
         for (int i = 0; i <= j; ++i) {
-            if (lc[i][j] != INT_MAX && c[i] + lc[i][j] < min)
+            if (lc[i][j] != INT_MAX && c[i] + lc[i][j] < min) {
                 min = c[i] + lc[i][j];
+                s[j + 1] = j + 1;
+            }
         }
         c[j + 1] = min;
-        printf("c[%d]: %d\n", j, c[j]);
+        printf("c[%d]: %d\n", j + 1, c[j + 1]);
+        printf("s[%d]: %d\n", j + 1, s[j + 1]);
     }
 
     return 0;
