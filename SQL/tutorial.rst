@@ -1,5 +1,11 @@
 SQL基础
 ====================================
+ORDER BY
+-----------------------------
+将SELECT的结果按照指定的字段排序。
+
+ORDER BY可接受多个参数，排序的时候先按第一个参数的字段排序，若两条记录的该字段值相等，则比较下一个参数的字段。在字段后加DESC表示从大到小排序。
+
 JOIN
 -----------------------------
 笛卡尔积
@@ -185,6 +191,25 @@ Window Functions
      sales     |     4 |   4800 |    2
      sales     |     3 |   4800 |    2
     (10 rows)
+
+
+窗口函数仅可用于查询命令中的SELECT列表和ORDER BY语句中，其它地方是禁止的(比如GROUP BY, HAVING, WHERE)，因为窗口函数逻辑上是在上述语句之后执行的。且窗口函数在合计函数之后执行。因此，合计函数的结果可用作窗口函数的参数，但是反过来不行。如果需要在窗口函数执行后进行过滤、分组操作，可以使用子查询::
+
+    SELECT depname, empno, salary, enroll_date, pos
+    FROM
+        (SELECT depname, empno, salary, enroll_date,
+                rank() OVER (PARTITION BY depname ORDER BY salary DESC, empno) AS pos
+         FROM empsalary
+        ) AS ss
+    WHERE pos < 3;
+
+AS语句可将某个复杂的字段、子查询起个别名，以便后续使用。
+
+SQL语句可以包含多个窗口函数。WINDOW语句可以给窗口函数命名::
+
+    SELECT sum(salary) OVER w, avg(salary) OVER w
+        FROM empsalary
+        WINDOW w AS (PARTITION BY depname ORDER BY salary DESC);
 
 
 Inheritance
