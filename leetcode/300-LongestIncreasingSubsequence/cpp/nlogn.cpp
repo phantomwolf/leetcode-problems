@@ -10,14 +10,12 @@ public:
         while (l <= r) {
             int m = (l + r) / 2;
             cout << "l: " << l << ", r: " << r << ", m: " << m << endl;
-            if (tail[m] > target)
+            if (tail[m] >= target)
                 r = m - 1;
-            else if (tail[m] < target)
-                l = m + 1;
             else
-                return m - 1;
+                l = m + 1;
         }
-        return r;
+        return r + 1;
     }
 
     int lengthOfLIS(vector<int>& nums) {
@@ -29,12 +27,17 @@ public:
         int tail[nums_len] = {0};
         tail[0] = nums[0];
         for (int i = 1; i < nums_len; ++i) {
-            if (nums[i] < tail[0])
+            if (nums[i] < tail[0]) {
+                cout << "case 1: tail[0] = " << nums[i] << endl;
                 tail[0] = nums[i];
-            else if (nums[i] > tail[length - 1])
+            }
+            else if (nums[i] > tail[length - 1]) {
+                cout << "case 2: tail[" << length << "] = " << nums[i] << endl;
                 tail[length++] = nums[i];
+            }
             else {
-                int ceil = binary_search(tail, 0, length - 1, nums[i]);
+                int ceil = binary_search(tail, -1, length - 1, nums[i]);
+                cout << "case 3: binary search :" << ceil << endl;
                 if (ceil > 0)
                     tail[ceil] = nums[i];
             }
