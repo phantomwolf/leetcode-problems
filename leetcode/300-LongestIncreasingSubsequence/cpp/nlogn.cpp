@@ -7,10 +7,17 @@ using namespace std;
 class Solution {
 public:
     int binary_search(int tail[], int l, int r, int target) {
-        while (l > r) {
+        while (l <= r) {
             int m = (l + r) / 2;
-            if (tail[m] >= target)
+            cout << "l: " << l << ", r: " << r << ", m: " << m << endl;
+            if (tail[m] > target)
+                r = m - 1;
+            else if (tail[m] < target)
+                l = m + 1;
+            else
+                return m - 1;
         }
+        return r;
     }
 
     int lengthOfLIS(vector<int>& nums) {
@@ -27,7 +34,25 @@ public:
             else if (nums[i] > tail[length - 1])
                 tail[length++] = nums[i];
             else {
+                int ceil = binary_search(tail, 0, length - 1, nums[i]);
+                if (ceil > 0)
+                    tail[ceil] = nums[i];
             }
         }
+        return length;
     }
 };
+
+
+int main()
+{
+    //vector<int> nums{2, 5, 3, 7, 11, 8, 10, 13, 6};
+    //vector<int> nums{2, 2};
+    vector<int> nums{10,9,2,5,3,4};
+    Solution s;
+
+    int res = s.lengthOfLIS(nums);
+    cout << "length: " << res << endl;
+
+    return 0;
+}
