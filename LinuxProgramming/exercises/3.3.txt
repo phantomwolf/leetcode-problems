@@ -1,0 +1,1 @@
+fd1 and fd2 share the same file table, while fd3 has its own file table(file status flags, current file offset). They all share the same i-node table.

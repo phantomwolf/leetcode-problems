@@ -1,0 +1,13 @@
+If fd is 1, 
+	dup2(fd, 0); // close 0 and 0 -> 1
+	dup2(fd, 1); // do nothing. fd 1 is still open
+	dup2(fd, 2); // close 2 and 2 -> 1
+	if (fd > 2) close(fd); // do nothing
+In the end, we have 3 fds pointing to the same file: 1.
+
+If fd is 3,
+	dup2(fd, 0); // close 0 and 0 -> 3
+	dup2(fd, 1); // close 1 and 1 -> 3
+	dup2(fd, 2); // close 2 and 2 -> 3
+	if (fd > 2) close(fd); // close 3
+In the end, we have 3 fds pointing to the same file fd 3 was pointing to.

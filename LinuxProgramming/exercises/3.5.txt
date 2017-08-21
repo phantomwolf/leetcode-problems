@@ -1,0 +1,13 @@
+In bash, digit1>&digit2 says to redirect descriptor digit1 to the same file as descriptor digit2
+
+ ./a.out > outfile 2>&1
+    // STDOUT_FILENO -> outfile
+    dup2(outfile, STDOUT_FILENO);
+    // STDERR_FILENO -> STDOUT_FILENO -> outfile
+     dup2(STDOUT_FILENO, STDERR_FILENO); 
+
+ ./a.out 2>&1 > outfile
+    // STDERR_FILENO -> STDOUT_FILENO
+    dup2(STDOUT_FILENO, STDERR_FILENO);
+    // STDOUT_FILENO -> outfile
+    dup2(outfile, STDOUT_FILENO);

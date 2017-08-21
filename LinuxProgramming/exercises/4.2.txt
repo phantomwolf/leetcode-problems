@@ -1,0 +1,5 @@
+All permissions are turned off: 
+     $ umask 777
+     $ date > temp.foo
+     $ ls -l temp.foo
+     ----------  1 sar           0 Feb 5 14:06 temp.foo

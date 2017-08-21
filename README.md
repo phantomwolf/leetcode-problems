@@ -1,2 +1,1 @@
-# leetcode
-leetcode answers and analysis
+Playground of all kinds of technologies.
