@@ -1,0 +1,8 @@
+title = "example"
+id = 9
+
+[server]
+
+    [server.one]
+    ip = "127.0.0.1"
+    type = "apache"

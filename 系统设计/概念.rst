@@ -1,0 +1,97 @@
+性能与可扩展性(Performance vs Scalability)
+=================================================
+可扩展系统
+    当一个系统的性能在某种程度上与系统内的资源(比如服务器数量)数量相关时，就说这个系统是可扩展的
+
+性能问题(Performance problem)
+    单个用户时，系统就很慢
+
+扩展问题(Scalability problem)
+    单个用户时系统挺快，但负载很高时变得很慢
+
+
+延迟与吞吐量(Latency vs Throughput)
+=================================================
+延迟(Latency)
+    执行一个操作或产生一些结果所需的时间。
+
+吞吐量(Throughput)
+    单位时间内完成的动作或产生的结果数量。
+
+一般来说，系统应以最大的吞吐量(Throughput)和可接受的延迟(Latency)为目标。
+
+
+可用性与持续性(Availability vs Consistency)
+=================================================
+CAP定律(CAP theorem)：在分布式电脑系统中，出现故障的情况下，你只能同时支持下列3个保证中的2个：
+
+- 一致性(Consistency)：Every read receives the most recent write or an error.
+- 可用性(Availability)：Every request receives a (non-error) response – without guarantee that it contains the most recent write.
+- 分区容错性(Partition Tolerance)：The system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes.
+
+注：网络分区(Network Partition)指由于网络设备的错误，或出于优化的原因，网络解体为相对独立的子网；分布式系统中的Partition指系统中的结点之间传递的消息丢失或者延迟(比如结点之间的网络连接断开了)；Partition tolerance指分布式系统在出现Partion现象后，仍然可以正常运行。
+
+没有分布式系统可以免疫网络错误，因此网络分区(network partitioning)一般必须被容忍，即一般必须支持Partition Tolerance。接下来，我们只能从一致性(Consistency)和可用性(Availability)之间选择一个。
+
+CP(consistency and partition tolerance)
+    由于网络分区而不能保证特定信息为最新时，系统返回error或timeout。当业务需要原子读写操作时，CP是个好选择。
+
+AP(Availability and partition tolerance)
+    由于网络分区而不能保证特定信息为最新时，系统返回信息的最近可用版本(例如一个结点与其他所有结点断开了连接，只好返回它自己身上的最新信息)。当业务需要允许最终一致性(Eventual Consistency)，或系统需要不顾外部错误继续运行时，可以选择AP。
+
+最终一致性(Eventual consistency)：一次写入后，读操作最终会看到这个改变(常常在若干毫秒内)。数据复制是异步的。这种方法常见于DNS和email，以及HA系统中。
+
+一个常见的误解是：任何时候我们都只能满足CAP定律中的2个，必须抛弃1个。当没有网络错误时(即分布式系统正常运行时)，一致性(Consistency)与可用性(Availability)可同时满足。仅当出现网络分区时，我们才需要做出妥协，抛弃其中一个。数据库设计中，传统的ACID数据库选择一致性(Consistency)，而NoSQL常常选择可用性(Availability)。
+
+
+一致性模式(Consistency patterns)
+=================================================
+同样的数据有了多个副本，我们面临一个问题：如何同步这些数据，以便客户端看到的数据是一致的。
+
+回想一下CAP定律中的一致性：每次读操作返回最近一次写入的数据，或一个错误。
+
+弱一致性(Weak consistency)
+----------------------------------------
+一次写入后，读操作也许会、也许不会看到新写入的数据。系统尽力而为。
+
+此做法用在例如memcached这样的系统中。弱一致性(Weak consistency)在实时用例中可以很好地工作：VoIP、视频聊天、实时多人游戏。例如，如果你正在打电话时，信号丢失了几秒钟，等通信恢复后，你不会听到失去连接期间的话。
+
+最终一致性(Eventual consistency)
+----------------------------------------
+一次写入后，读操作最终会看到新数据(常常在若干毫秒以内)。数据被异步地复制到不同的结点上。
+
+此方法见于DNS、email上。最终一致性(Eventual consistency)在HA系统中工作良好。
+
+强一致性(Strong consistency)
+----------------------------------------
+一次写入后，读操作就会看到新数据。数据被同步地复制到其他结点上。
+
+此方法见于文件系统、关系型数据库。强一致性(Strong consistency)在需要事务的系统中工作良好。
+
+
+可用性模式(Availability patterns)
+=================================================
+高可用性共有2个主要模式：故障转移(fail-over)和复制(replication)。
+
+故障转移(Fail-over)
+----------------------------------------
+主从模式(Active-Passive)
++++++++++++++++++++++++++++++++
+Active-Passive也叫做Master-Slave模式。在Active-Passive故障转移中，主服务器和待机的从服务器之间互相发送心跳包。如果心跳包被阻断，从服务器接管主服务器的IP，并继续服务。
+
+宕机时间取决于从服务器是已处于“热”待机模式，还是从“冷”待机模式启动。只有主服务器处理流量。
+
+主主模式(Active-Active)
++++++++++++++++++++++++++++++++
+Active-Active模式也叫做Master-Master。主主模式中，两个服务器均处理流量，将负载分配到两者之间。
+
+如果服务器是面向公众的，DNS需要两个服务器的公共IP都知道；如果服务器是面向内部的，程序逻辑需要两个服务器都了解。
+
+故障转移的缺点
++++++++++++++++++++++++++++++++
+- 故障转移给系统增加了额外的复杂性
+- 若主服务器的新数据还没复制给从服务器，主服务器就已经崩溃了，会造成潜在的数据丢失。
+
+复制(Replication)
+----------------------------------------
+分为主从(Master-Slave)和主主复制(Master-Master)，将在数据库章节中详细介绍。
