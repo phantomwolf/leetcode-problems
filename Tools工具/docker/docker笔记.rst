@@ -171,3 +171,48 @@ docker-compose.yml
 可以看到有5个相同的container在运行。
 
 不断用浏览器访问http://localhost ，会发现服务器的hostname经常变化，这是因为每个container都有一个不同的hostname，它们的hostname就是其ID，由于负载均衡采用round-robin算法，因此每次刷新页面都能访问到一个不同的container。
+
+更新服务配置并重新部署
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+要修改服务的配置，例如scale的数量，只需修改docker-compose.yml，并用同样的命令重新部署即可。docker会自动调整相应的配置::
+
+    docker stack deploy -c docker-compose.yml getstartedlab
+
+关闭服务
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+要关闭服务，运行::
+
+    docker stack rm getstartedlab
+
+关闭swarm::
+
+    docker swarm leave --force
+
+
+Swarm
+----------------------------------------
+Swarm是一个运行docker的集群，由一个swarm manager和若干node组成。docker命令仍与之前一样，不同的是container将运行在集群中的所有机器上。
+
+Swarm manager有多种运行container的策略：例如"emptiest node"，在最空闲的机器上运行container；"global"，保证每个机器上只运行一个特定的container。
+
+每个swarm node中都有一个swarm load balancer，可以实现负载均衡。
+
+.. image:: images/ingress-routing-mesh.png
+
+创建与加入swarm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在任意一台机器上执行::
+
+    docker swarm init
+
+这台机器就会成为swarm manager。按照提示，在其他机器上执行docker swarm join，即可加入该集群::
+
+    docker swarm join --token <token> <ip>:2377
+
+在swarm中部署应用
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在swarm manager上执行与之前相同的命令即可::
+
+    docker stack deploy -c docker-compose.yml getstartedlab
+
+
