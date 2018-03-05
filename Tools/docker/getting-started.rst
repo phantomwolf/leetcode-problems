@@ -96,7 +96,7 @@ Dockerfile中的"ADD . /app"命令，表示将当前目录的内容放入docker 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 使用以下命令构建docker image::
 
-    docker build -t friendlyhello .
+    $ docker build -t friendlyhello .
 
 其中，-t选项设置image的tag，用docker image ls即可看到。
 
@@ -104,7 +104,7 @@ Dockerfile中的"ADD . /app"命令，表示将当前目录的内容放入docker 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 用以下命令运行docker image::
 
-    docker run -d -p 4000:80 friendlyhello
+    $ docker run -d -p 4000:80 friendlyhello
 
 由于Dockerfile中的“EXPOSE 80”语句，container的80端口将被暴露出来。默认情况下，container绑定到localhost(0.0.0.0)上。命令中的-p 4000:80表示将本机的4000端口影射到container的80端口。-d表示后台运行(daemon)。
 
@@ -154,19 +154,19 @@ docker-compose.yml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 首先，在主机上初始化一个集群(下一章会解释)::
 
-    docker swarm init
+    $ docker swarm init
 
 接下来，运行你的service(命令创建了一个叫做"getstartedlab"的stack，下一章会介绍stack)::
 
-    docker stack deploy -c docker-compose.yml getstartedlab
+    $ docker stack deploy -c docker-compose.yml getstartedlab
 
 不出问题的话，我们的服务已经正常运行了。列出运行中的服务::
 
-    docker service ls
+    $ docker service ls
 
 可以看到service的名字为getstartedlab_web(stack名+service名)。查看运行中的container::
 
-    docker container ls
+    $ docker container ls
 
 可以看到有5个相同的container在运行。
 
@@ -176,17 +176,17 @@ docker-compose.yml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 要修改服务的配置，例如scale的数量，只需修改docker-compose.yml，并用同样的命令重新部署即可。docker会自动调整相应的配置::
 
-    docker stack deploy -c docker-compose.yml getstartedlab
+    $ docker stack deploy -c docker-compose.yml getstartedlab
 
 关闭服务
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 要关闭服务，运行::
 
-    docker stack rm getstartedlab
+    $ docker stack rm getstartedlab
 
 关闭swarm::
 
-    docker swarm leave --force
+    $ docker swarm leave --force
 
 
 Swarm
@@ -203,16 +203,96 @@ Swarm manager有多种运行container的策略：例如"emptiest node"，在最�
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 在任意一台机器上执行::
 
-    docker swarm init
+    $ docker swarm init
 
 这台机器就会成为swarm manager。按照提示，在其他机器上执行docker swarm join，即可加入该集群::
 
-    docker swarm join --token <token> <ip>:2377
+    $ docker swarm join --token <token> <ip>:2377
 
 在swarm中部署应用
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 在swarm manager上执行与之前相同的命令即可::
 
-    docker stack deploy -c docker-compose.yml getstartedlab
+    $ docker stack deploy -c docker-compose.yml getstartedlab
+
+访问应用
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+当swarm集群中有多个结点时，访问任意一个结点都可以访问应用，swarm内部的load balancer会将请求转发给其中一个结点。这是ingress routing mesh的作用。
+
+ingress routing mesh保证，不管container运行在哪一个node上，所有node上的指定端口都被保留给该服务。且每个node都运行了swarm load balancer。当我们访问任意一个结点的指定端口时，load balancer会把请求转发给其中一个结点。
+
+.. image:: images/ingress-routing-mesh.png
+
+docker使用7946 TCP/UDP来做container network discovery；4789 UDP用于container ingress network。请确保这两个端口可以正常通信。
+
+关闭应用
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    $ docker stack rm getstartedlab
+
+
+Stack
+----------------------------------------
+Stack是一组相关的服务，它们共享依赖，可以一同扩展(scale)。换句话说，stack可以认为是完整的分布式系统，一个完整的应用。(不排除特别复杂的应用由多个stack组成)。
+
+添加新的service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+一个Stack可以含有多个service，只需在docker-compose.yml中定义即可。我们给之前的应用添加visualizer和redis服务，visualizer服务可以显示当前container的情况以及资源占用；redis在本应用中用于保存客户访问量::
+
+    version: "3"
+    services:
+      web:
+        # replace username/repo:tag with your name and image details
+        image: username/repo:tag
+        deploy:
+          replicas: 5
+          restart_policy:
+            condition: on-failure
+          resources:
+            limits:
+              cpus: "0.1"
+              memory: 50M
+        ports:
+          - "80:80"
+        networks:
+          - webnet
+      visualizer:
+        image: dockersamples/visualizer:stable
+        ports:
+          - "8080:8080"
+        volumes:
+          - "/var/run/docker.sock:/var/run/docker.sock"
+        deploy:
+          placement:
+            constraints: [node.role == manager]
+        networks:
+          - webnet
+      redis:
+        image: redis
+        ports:
+          - "6379:6379"
+        volumes:
+          - "/home/docker/data:/data"
+        deploy:
+          placement:
+            constraints: [node.role == manager]
+        command: redis-server --appendonly yes
+        networks:
+          - webnet
+    networks:
+      webnet:
+
+其中，volumes选项表示目录映射(类似端口映射)，将主机(swarm manager)上的/home/docker/data目录映射到container里的/data目录。
+
+部署应用
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+重新部署应用::
+
+    $ docker stack deploy -c docker-compose.yml getstartedlab
+
+使用以下命令可以查看service的情况::
+
+    $ docker service ls
 
 
