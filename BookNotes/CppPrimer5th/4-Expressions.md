@@ -23,4 +23,31 @@ dynamic_cast is similar to static_cast, except that it's executed at runtime, ma
 Note: using dynamic_cast for upcasting is unnecessary.
 
 #### const_cast
-A const_cast changes only a low-level const in its operand. Conventionally we say that a cast that converts a const object to a nonconst type “casts away the const.”
+A const_cast changes only a low-level(pointer to const) const in its operand. Conventionally we say that a cast that converts a const object to a nonconst type “casts away the const.”
+
+In g++, after const_cast, we can modify the variable pointed by the pointer:
+
+```
+char c = 'A';
+const char *pc = &c;                // We can't modify c through pc
+char *p = const_cast<char*>(pc);
+*p = 'B';                           // But we can modify c through p
+```
+
+Only a const_cast may be used to change the constness of an expression. Trying to change whether an expression is const with any of the other forms of named cast is a compile-time error. Similarly, we cannot use a const_cast to change the type of an expression.
+
+#### reinterpret_cast
+A reinterpret_cast generally performs a low-level reinterpretation of the bit pattern of its operands.
+
+```
+int *ip;
+char *pc = reinterpret_cast<char*>(ip);
+```
+
+#### old-style cast
+Old-stype cast can behave like const_cast, a static_cast, or a reinterpret_cast.
+
+```
+type (expr); // function-style cast notation
+(type) expr; // C-language-style cast notation
+```

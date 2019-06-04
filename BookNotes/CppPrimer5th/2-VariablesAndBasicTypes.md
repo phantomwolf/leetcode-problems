@@ -41,11 +41,11 @@ int &r2 = ci;         // error: non const reference to a const object
 
 Terminology: const Reference is a Reference to const. C++ programmers tend to abbreviate the phrase “reference to const” as “const reference.” Technically speaking, there are no const references. A reference is not an object, so we cannot make a reference itself const. Indeed, because there is no way to make a reference refer to a different object, in some sense all references are const.
 
-### 2.4.2 Pointers and const(low-level const)
+### 2.4.2 Pointers and const
 A pointer can be a pointer to const and a const pointer at the same time.
 
 语法：const放最前面的是pointer to const；const紧跟着 * 的是const pointer
-#### Pointer to const
+#### Pointer to const(low-level const)
 A pointer to const is a pointer which can't change the value of the variable it points to, but the value of the pointer itself can be changed(like pointing to another variable). Also known as low-level const.
 
 ```
