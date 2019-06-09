@@ -33,3 +33,6 @@
 # Codeblocks
 leetcode/*/bin/*
 leetcode/*/obj/*
+
+# VSCode
+.vscode
