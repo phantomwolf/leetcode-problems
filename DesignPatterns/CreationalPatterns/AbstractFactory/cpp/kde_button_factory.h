@@ -5,6 +5,7 @@
 
 #include "button_factory.h"
 
+// Role: ConcreteFactory
 class KDEButtonFactory : public ButtonFactory {
  public:
   virtual Button *createButton(const std::string &text);

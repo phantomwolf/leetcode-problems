@@ -3,14 +3,14 @@
 
 #include <string>
 
-// Abstract base class
+// Role: AbstractProduct
 class Button {
-public:
-    Button(const std::string &text);
-    virtual void click();
+ public:
+  Button(const std::string &text);
+  virtual void click();
 
-protected:
-    std::string text;
+ protected:
+  std::string text;
 };
 
 #endif

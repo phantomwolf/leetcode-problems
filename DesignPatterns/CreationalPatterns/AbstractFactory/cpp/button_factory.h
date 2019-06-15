@@ -5,7 +5,7 @@
 
 #include "button.h"
 
-// Abstract factory
+// Role: AbstractFactory
 class ButtonFactory {
  public:
   virtual Button *createButton(const std::string &text) = 0;

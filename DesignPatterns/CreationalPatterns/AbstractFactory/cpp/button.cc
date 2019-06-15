@@ -3,13 +3,10 @@
 
 #include "button.h"
 
-using std::string;
 using std::cout;
 using std::endl;
+using std::string;
 
-// Button
-Button::Button(const string &text): text(text) {}
+Button::Button(const string &text) : text(text) {}
 
-void Button::click() {
-    cout << "Button: " << this->text << endl;
-}
+void Button::click() { cout << "Button: " << this->text << endl; }
