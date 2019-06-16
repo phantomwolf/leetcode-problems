@@ -6,6 +6,11 @@ Package in Java is a mechanism to encapsulate a group of classes, sub packages a
 - Providing controlled access: protected and default have package level access control. A protected member is accessible by classes in the same package and its subclasses. A default member (without any access specifier) is accessible by classes in the same package only.
 - Packages can be considered as data encapsulation (or data-hiding).
 
+## Package的特性
+
+- public: 该成员可被所有class访问；private: 该成员只能在该class内部被访问；default: 该成员只能在同一个package里访问；protected: 该成员可以在同一个package里和subclass里访问。
+- 可以避免命名冲突
+
 # 示例
 假设我们公司域名为www.snowwolf.com，要创建一个名为com.snowwolf.somepackage的package，其中包含一个class: SomeClass。
 
