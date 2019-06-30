@@ -3,6 +3,9 @@ public class TreeNode {
     public TreeNode left;
     public TreeNode right;
 
+    public TreeNode(int x) {
+        this.val = new Integer(x);
+    }
     public TreeNode(Integer x) {
         this.val = x;
     }

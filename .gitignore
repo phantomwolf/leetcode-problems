@@ -36,3 +36,6 @@ leetcode/*/obj/*
 
 # VSCode
 .vscode
+
+# Java
+*.class
