@@ -5,14 +5,15 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> combinations = new ArrayList<List<Integer>>();
         Stack<Integer> path = new Stack<Integer>();
+        Arrays.sort(candidates);
 
         path.push(0);
         int sum = candidates[0];
-
         while (!path.empty()) {
             while (sum < target) {
-                path.push(path.peek());
-                sum += candidates[path.peek()];
+                Integer i = path.peek();
+                path.push(i);
+                sum += candidates[i];
             }
             if (sum == target) {
                 List<Integer> combination = new ArrayList<Integer>();
@@ -22,8 +23,10 @@ class Solution {
                 combinations.add(combination);
             }
             // Move backward and choose a different path
+            Integer i = path.pop();
+            sum -= candidates[i];
             while (!path.empty()) {
-                Integer i = path.pop();
+                i = path.pop();
                 sum -= candidates[i];
                 if (i < candidates.length-1) {
                     i++;
