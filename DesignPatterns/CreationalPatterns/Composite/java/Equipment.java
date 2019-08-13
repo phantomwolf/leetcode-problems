@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
+// Role: Component(interface)
 public class Equipment {
     private String name;
     private double power;
