@@ -26,9 +26,9 @@ Hoare’s Partition Scheme
         i = left + 1
         j = right
         while true
-            while array[i] < array[left]
+            while i <= right && array[i] < array[left]
                 i++
-            while array[j] > array[left]
+            while j >= left && array[j] > array[left]
                 j--
             if i >= j
                 swap(array[j], array[left])
