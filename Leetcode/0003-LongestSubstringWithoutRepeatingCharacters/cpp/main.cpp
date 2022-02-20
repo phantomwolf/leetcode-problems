@@ -25,7 +25,7 @@ public:
             }
             hash_table[s[j]] = j;
         }
-        // edge condition
+        // edge case
         length = j - i;
         if (longest < length)
             longest = length;
