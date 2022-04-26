@@ -39,3 +39,4 @@ leetcode/*/obj/*
 
 # Java
 *.class
+**/.idea
