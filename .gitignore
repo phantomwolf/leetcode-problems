@@ -40,3 +40,4 @@ leetcode/*/obj/*
 # Java
 *.class
 **/.idea
+**/.gradle
