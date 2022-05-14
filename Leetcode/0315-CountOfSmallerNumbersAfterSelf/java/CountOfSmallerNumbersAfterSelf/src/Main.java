@@ -45,22 +45,20 @@ class Solution {
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++)
             aux[k] = pairs[k];
-        System.out.println(Arrays.toString(pairs));
-        System.out.printf("lo: %d, mid: %d, hi: %d\n", lo, mid, hi);
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
                 pairs[k] = aux[j++];
             } else if (j > hi) {
                 counts[aux[i].index] += j - mid - 1;
                 pairs[k] = aux[i++];
-            } else if (aux[i].val <= aux[j].val) {
+            } else if (aux[i].val > aux[j].val) {
+                pairs[k] = aux[j++];
+            } else {
                 counts[aux[i].index] += j - mid - 1;
                 pairs[k] = aux[i++];
-            } else {
-                pairs[k] = aux[j++];
+
             }
         }
-        System.out.println(Arrays.toString(pairs));
     }
 }
 
