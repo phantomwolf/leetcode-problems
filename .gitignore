@@ -42,5 +42,6 @@ leetcode/*/obj/*
 **/.idea
 **/.gradle
 
-/.gradle
+# Gradle
+**/.gradle
 **/build/
