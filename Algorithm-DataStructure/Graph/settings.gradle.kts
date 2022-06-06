@@ -9,6 +9,7 @@
 
 rootProject.name = "Graph"
 include("bfs")
+include("bipartite")
 include("cycle")
 include("dfs")
 include("dijkstra")
