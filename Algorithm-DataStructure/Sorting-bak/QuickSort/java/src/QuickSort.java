@@ -51,7 +51,7 @@ public class QuickSort {
 			return quickSelect(nums, pivot+1, right, k);
 		}
 	}
-	
+
 	public static void quickSort(int[] nums, int left, int right) {
 		int pivot = partition(nums, left, right);
 		if (pivot-1 > left) {

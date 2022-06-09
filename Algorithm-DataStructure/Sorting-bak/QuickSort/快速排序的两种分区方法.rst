@@ -1,0 +1,42 @@
+Lomuto’s Partition Scheme
+=======================================
+设置i与j两个下标，j用来遍历数组，i表示下一个要写入的、比pivot小的数的位置。我们以从小到大排序为例::
+
+    partition(array[], left, right)
+        choose a nice pivot
+        // Swap pivot to the last position
+        swap(array[right], array[pivot])
+        i = left
+        for j in [left, right)
+            if array[j] < array[pivot]
+                swap(array[i], array[j])
+                i++
+        // Swap pivot to the correct position
+        swap(array[i], array[right])
+        return i
+
+Hoare’s Partition Scheme
+=======================================
+设置i与j两个下标，分别从数组的两头开始向中间前进。在i < j的前提下，找到一个比pivot大的array[i]，和一个比pivot小的array[j]，将两者交换。重复上述过程，直到i与j相遇::
+
+    partition(array[], left, right)
+        choose a nice pivot
+        // Swap pivot to the first position
+        swap(array[left], array[pivot])
+        i = left + 1
+        j = right
+        while true
+            while i <= right && array[i] < array[left]
+                i++
+            while j >= left && array[j] > array[left]
+                j--
+            if i >= j
+                swap(array[j], array[left])
+                return j
+            swap(array[i], array[j]);
+
+对比
+=======================================
+
+1. Hoare法效率更好，平均交换次数能比Lomuto少3倍，而且在数组里充满相等元素时也很高效
+2. Hoare与Lomuto法相似，二者在最坏情况下都会退化到O(n^2)，并且都不是稳定排序。
