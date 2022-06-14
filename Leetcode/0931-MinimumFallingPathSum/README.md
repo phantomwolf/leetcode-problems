@@ -26,4 +26,6 @@ Explanation: The falling path with a minimum sum is shown.
 - -100 <= matrix[i][j] <= 100
 
 # Space-optimized DP solution
-观察DP Solution，可知求dp[i][j]时，我们只需要上一行的值：dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]。所以只需要两个数组prevDP和currDP就够了。每次循环开始时，将prevDP和currDP交换。
+观察DP Solution，可知求dp[i][j]时，我们只需要上一行的值：dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]。
+
+创建一维数组dp[]：dp[i-1][j-1]为dp[j-1]已被覆盖掉的旧值，所以我们需要一个变量来保存这个旧值；dp[i-1][j]即dp[j]未被覆盖前的值；dp[i-1][j+1]即dp[j+1]，因为其在循环的下一步才会被覆盖，可以直接用。

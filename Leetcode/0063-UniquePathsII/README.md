@@ -26,3 +26,7 @@ There are two ways to reach the bottom-right corner:
 
 ## 解答
 此题与62 Unique Paths类似，只是增加了障碍。当一个位置上有障碍时，到达该位置的路径数为0。
+
+空间优化的DP方案：
+
+观察普通的DP解法可知dp[i][j] = dp[i-1][j] + dp[i][j-1]，只会用到相邻的dp数组中的值，因此没必要创建整个dp数组，我们将i坐标省略掉，令dp[j]为二维dp[][]数组中的最近一行，可知dp[j] = dp[j] + dp[j-1]。
