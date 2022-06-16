@@ -375,3 +375,12 @@ Leetcode 221: Maximal Square
     dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
 
 在求dp的同时跟踪其最大值，可以得到最大正方形的边长，从而求出其面积。
+
+Leetcode 516. Longest Palindromic Subsequence
+++++++++++++++++++++++++++++++++++++++++++++++++++
+将字符串s反转为r，s和r的Longest Common Subsequence就是s的Longest Palindromic Subsequence。
+
+优化：
+
+1. 我们没必要真的将s反转，只需要通过计算，造成反转的效果即可：r.charAt(j - 1)等价于s.charAt(s.length() - j)
+2. 可以使用空间优化技巧，将dp数组优化成一维数组。

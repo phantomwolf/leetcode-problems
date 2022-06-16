@@ -45,7 +45,6 @@ void printLCSRecursive(char s[XSIZE+1][YSIZE+1], char *x, char *y, int m, int n)
     }
 }
 
-
 int main(int argc, char *argv[])
 {
     char *x = X;
