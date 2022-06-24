@@ -36,6 +36,9 @@ Output: false
 - s and wordDict[i] consist of only lowercase English letters.
 - All the strings of wordDict are unique.
 
+## 最优子结构
+当遇到特定的输入时，最优子结构是存在的。比如对于输入xxxxxxapplepen，wordDict = ["x","apple", "pen", "applepen"]，既可以分词为x|x|x|x|x|x|apple|pen，又可以x|x|x|x|x|x|applepen。把之前xxxxxx分词结果存下来，就可以重用。
+
 ## Solution: DP with Trie
 观察DP Solution，在内循环里，我们需要获取每一个substring s[j, i)，并查询它在Set中是否存在。有了Trie的帮助，我们可以把这一过程的时间复杂度从O(n^2)降低到O(n)。
 
