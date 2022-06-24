@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="758aaab4-2c05-45f9-be7a-68591492fbc8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Leetcode/0140-WordBreakII/java/app/src/main/java/WordBreakII/BottomUpDPSolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Leetcode/0140-WordBreakII/java/app/src/main/java/WordBreakII/TrieNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Leetcode/2115-FindAllPossibleRecipesFromGivenSupplies/java/app/src/main/java/FindAllPossibleRecipesFromGivenSupplies/RecursiveMemoSolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Leetcode/2259-RemoveDigitFromNumberToMaximizeResult/java/app/src/main/java/RemoveDigitFromNumberToMaximizeResult/Solution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Array/MajorityElement/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Array/MajorityElement/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Array/MajorityElement/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Array/MajorityElement/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Array/MajorityElement/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Array/MajorityElement/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Array/MajorityElement/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Array/MajorityElement/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/MyHash/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/MyHash/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/MyHash/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/MyHash/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/MyHash/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/MyHash/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/MyHash/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/MyHash/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Hashing/SimpleHashAlgorithm/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinaryHeap/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinaryHeap/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinaryHeap/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinaryHeap/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinaryHeap/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinaryHeap/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinaryHeap/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinaryHeap/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinomialHeap/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinomialHeap/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinomialHeap/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinomialHeap/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinomialHeap/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinomialHeap/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/BinomialHeap/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/BinomialHeap/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/FibonacciHeap/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/FibonacciHeap/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/FibonacciHeap/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/FibonacciHeap/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/FibonacciHeap/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/FibonacciHeap/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Heap/FibonacciHeap/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Heap/FibonacciHeap/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sort/external-sort/c/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Sort/external-sort/c/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sort/external-sort/c/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Sort/external-sort/c/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sort/external-sort/c/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Sort/external-sort/c/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sort/external-sort/c/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Sort/external-sort/c/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/BinaryTree/IsCompleteTree/bst.c" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/BinaryTree/IsCompleteTree/bst.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/BinaryTree/IsCompleteTree/bst.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/BinaryTree/IsCompleteTree/bst.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/BinaryTree/Traversal/cpp/bst.c" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/BinaryTree/Traversal/cpp/bst.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/BinaryTree/Traversal/cpp/bst.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/BinaryTree/Traversal/cpp/bst.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/Trie/Trie/compile" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/Trie/Trie/compile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/Trie/Trie/depcomp" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/Trie/Trie/depcomp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/Trie/Trie/install-sh" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/Trie/Trie/install-sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tree/Trie/Trie/missing" beforeDir="false" afterPath="$PROJECT_DIR$/../Tree/Trie/Trie/missing" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Leetcode/0139-WordBreak/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Leetcode/0139-WordBreak/README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="2AxlkNhDTGMmyoPVjRNHByHtF9J" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="758aaab4-2c05-45f9-be7a-68591492fbc8" name="Changes" comment="" />
+      <created>1655959259990</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655959259990</updated>
+    </task>
+    <servers />
+  </component>
+</project>
