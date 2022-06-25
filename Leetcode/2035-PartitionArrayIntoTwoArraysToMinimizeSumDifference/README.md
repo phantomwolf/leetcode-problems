@@ -42,6 +42,9 @@ This problem doesn't have optimal substructure.
 First calculate the sum of the entire array. Then find all subsets of length n, calculate their sums, and find the minimum diff. The time complexity of finding all subsets is O(2^N).
 
 ### Meet in the middle
+
+https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference/discuss/1513298/C%2B%2B-Meet-In-Middle
+
 Calculating subsets of a large array takes a lot of time. The "Meet in the middle" technique can reduce the time complexity from `O(2^N)` to `O(2^(N/2) * log(2^(N/2)))`.
 
 1. Split the input array into 2 subsets say A and B. A having first n/2 integers and B having rest.
