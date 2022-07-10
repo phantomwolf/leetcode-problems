@@ -1,0 +1,72 @@
+# Design Pastebin.com
+## 1. Feature expectations
+
+**Use cases:**
+
+- User enters a block of text and gets a randomly generated link
+    - Expiration
+        - Default setting does not expire
+        - Can optionally set a timed expiration
+- User enters a paste's url and views the contents
+- User is anonymous
+- Service tracks analytics of pages
+    - Monthly visit stats
+- Service deletes expired pastes
+- Service has high availability
+
+**Out of scope**
+
+- User registers for an account
+    - User verifies email
+- User logs into a registered account
+    - User edits the document
+- User can set visibility
+- User can set the shortlink
+
+**Who're the users?**
+
+- Writers: users who post text snippets and share short links with others
+- Readers: users who open short links and read the contents
+
+**How many users?**
+
+10 million users.
+
+**Usage patterns**
+
+- 10:1 read to write ratio
+- Posts are text-only
+
+## 2. Estimations
+
+- Throughput: 10,000,000 writes/month, 100,000,000 reads/month.
+- Read/Write ratio: 10 : 1
+- Traffic: 10 million paste writes per month. 100 million paste reads per month
+- Storage: If each post is 1KB, there'll be 10,000,000KB = 9.53GB per month
+- RAM: QPS * 3600 * 1KB
+
+## 3.Design goals
+
+- Latency: p99.9 500ms(0.1 sec: instant, 1 second: acceptable)
+
+## 4. High-level Design
+### API design
+
+**POST /posts**
+
+```json
+{
+    "title": "",
+    "text": "",
+    "expire": "timestamp"
+}
+```
+
+**GET /posts/<id>**
+
+### Database design
+DynamoDB:
+
+{
+    ""
+}
