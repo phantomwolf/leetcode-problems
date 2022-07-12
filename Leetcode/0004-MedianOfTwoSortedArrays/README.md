@@ -20,28 +20,69 @@ The median is (2 + 3)/2 = 2.5
 ## 解法1
 类似归并排序的合并过程。不断比较nums1和nums2开头的数，并将较小的一个抛弃，直到第k个数。复杂度O(m+n)
 
-## 解法2
-假定k为偶数。将nums1中k/2小的数a与nums2中k/2小的数b进行比较。若a < b，nums1中的前k/2个数就可以丢弃。
-在例1中，k = (2+1）/2 +１＝2, k/2 = 1. 比较nums1[k/2 – 1]与nums2[k/2 – 1]可知，前者比较小，丢弃nums1[0]到nums1[k/2 – 1]的数，剩下nums1: [3]和nums2: [2]，此时k = 2 – 1 = 1。当k = 1时，选择两个数组开头较小的数字，所以median = 2。
+## 解法2: 二分查找
+二分查找。先来看一个典型输入：
 
-### 为什么可以丢弃nums1[0]到nums1[k/2 – 1]？
-Assume that the number of elements in A and B are both larger than k/2, and if we compare the k/2-th smallest element in A(i.e. A[k/2-1]) and the k-th smallest element in B(i.e. B[k/2 - 1]), there are three results:
-(Becasue k can be odd or even number, so we assume k is even number here for simplicy. The following is also true when k is an odd number.)
+```
+nums1 = [1, 5, 9]
+nums2 = [3, 7]
+```
 
-* A[k/2-1] = B[k/2-1]
-* A[k/2-1] > B[k/2-1]
-* A[k/2-1] < B[k/2-1]
+如果将两个数组合并，可以得到`[1, 3, 5, 7, 9]`，其中位数（median）为5。那么如何不合并数组就求出结果呢？
 
-if A[k/2-1] < B[k/2-1], that means all the elements from A[0] to A[k/2-1](i.e. the k/2 smallest elements in A) are in the range of k smallest elements in the union of A and B. Or, in the other word, A[k/2 - 1] can never be larger than the k-th smalleset element in the union of A and B.
+我们将合并后的数组分成两部分，其中中位数在左半部分，即`[1, 3, 5 | 7, 9]`。可知nums1中有1个元素被分到了左边，nums2有2个，即
 
-## Why?
-We can use a proof by contradiction(归谬法). Since A[k/2 - 1] is larger than the k-th smallest element in the union of A and B, then we assume it is the (k+1)-th smallest one. Since it is smaller than B[k/2 - 1], then B[k/2 - 1] should be at least the (k+2)-th smallest one. So there are at most (k/2-1) elements smaller than A[k/2-1] in A, and at most (k/2 - 1) elements smaller than A[k/2-1] in B.So the total number is k/2+k/2-2, which, no matter when k is odd or even, is surly smaller than k(since A[k/2-1] is the (k+1)-th smallest element). So A[k/2-1] can never larger than the k-th smallest element in the union of A and B if A[k/2-1]<B[k/2-1];
-Since there is such an important conclusion, we can safely drop the first k/2 element in A, which are definitaly smaller than k-th element in the union of A and B. This is also true for the A[k/2-1] > B[k/2-1] condition, which we should drop the elements in B.
-When A[k/2-1] = B[k/2-1], then we have found the k-th smallest element, that is the equal element, we can call it m. There are each (k/2-1) numbers smaller than m in A and B, so m must be the k-th smallest number. So we can call a function recursively, when A[k/2-1] < B[k/2-1], we drop the elements in A, else we drop the elements in B.
+```
+       left1    right1
+nums1 = [1,   |   5,    9]
+nums2 = [3    |   7]
+       left2    right2
+```
 
+设左半部分最后一个元素为left1/left2，右半部分第一个元素为right1/right2。可知，left1 < right2且left2 < right1。这时，right1和right2中较小的就是中位数，这是因为nums1和nums2的左半部分加起来大小是合并后数组的一半，且nums1和nums2左半部分里的任何元素，都比右半部分的要小。根据中位数的定义，我们已经找到了中位数。
 
-We should also consider the edge case, that is, when should we stop?
-1. When A or B is empty, we return B[k-1]( or A[k-1]), respectively;
-2. When k is 1(when A and B are both not empty), we return the smaller one of A[0] and B[0]
-3. When A[k/2-1] = B[k/2-1], we should return one of them
+这个划分方法对偶数个元素的输入同样适用，例如对于以下输入：
+1 3 5 7 8 9
+```
+              left1   right1
+nums1 = [1,     5   |   9]
+nums2 = [3   |  7,      8]
+      left2   right2
+```
 
+因为是元素总数为偶数个，左右两半部分大小相等，因此用于计算中位数的两个元素分别是左边最大的元素和右边最小的元素，即`(max(left1, left2) + min(right1, right2)) / 2`。
+
+### 越界
+根据nums1和nums2的大小和内容，有可能会出现越界的情况。比如：
+
+```
+nums1 = [1  | ]
+nums2 = [2, | 3, 4, 5]
+```
+
+最终的结果为3。按二分查找的算法进行查找时，right1会越界。这时只要规定向右越界的值为无限大即可。
+
+再看以下输入：
+
+```
+nums1 = [      | 5]
+nums2 = [1, 2, | 3, 4]
+```
+
+二分搜索的第一轮：
+
+```
+lo1 = 0, hi1 = 0, mi1 = 0, mi2 = 5 / 2 - 0 - 2 = 0
+left1 = 5, right1 = INT_MAX, left2 = 1, right2 = 2
+```
+
+因为left1 > right2，因此mi1需要向左移。令hi1 = mi1 - 1 = -1，第二轮循环：
+
+```
+lo1 = 0, hi1 = -1, mi1 = floor((lo1 + hi1) / 2.0) = -1, mi2 = 5/2 - (-1) - 2 = 1
+left1 = INT_MIN, right1 = 5, left2 = 2, right2 = 3
+```
+
+由于left1 < right2且left2 < right1，因此我们成功找到了正确的划分。由于总共有奇数个元素，因此最终结果为min(right1, right2) = 3。
+
+注意事项：mi1的值并非`(lo1 + hi1) / 2`，而是`floor((lo1 + hi1) / 2.0)`。这是因为当lo1 + hi1为-1时，前者的值为0，后者为-1。我们想要的是后者，否则当lo1=0, hi1=-1时，mi1将无法移动到数组外面。
