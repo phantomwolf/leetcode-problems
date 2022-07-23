@@ -14,7 +14,6 @@ class Edge implements Comparable<Edge> {
         this.vertex = vertex;
         this.distance = distance;
     }
-
     @Override
     public int compareTo(Edge other) {
         return distance - other.distance;

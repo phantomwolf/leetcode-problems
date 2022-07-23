@@ -189,7 +189,6 @@ i为coins的下标，表示至少要使用一个coins[i]硬币；j为要凑齐�
 
     egg_drop(n, k) = 1 + min(  max(egg_drop(n-1, x-1), egg_drop(n, k-x))  ), x属于[1, k]
 
-
 ### LongestBitonicSubsequence
 求数组中的一个最长子序列，使其元素先递增，再递减。递增的子序列，可被视为递减部分为空；全程递减的子序列，可被视为递增部分为空。二者均符合要求。
 
