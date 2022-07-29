@@ -30,7 +30,7 @@ public class QuickSelectSolution {
             while (i <= hi && nums[i] < nums[lo]) {
                 i++;
             }
-            while (j >= lo && nums[j] > nums[lo]) {
+            while (j > lo && nums[j] > nums[lo]) {
                 j--;
             }
             if (i >= j) {
