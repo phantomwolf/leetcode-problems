@@ -1,7 +1,3 @@
-代码
-====================================
-good-good-study: Algorithm-DataStructure/OrderStatistics-SelectionProblem
-
 Order statistic(顺序统计)
 ====================================
 在统计学中，样本的第k顺序统计量，就是第k小的值。这一问题被成为Selection Problem，相应的算法成为Selection Algorithm。这类问题包含以下子问题：寻找最小值、最大值、中间值。
@@ -66,3 +62,8 @@ median of medians策略
 3. 求出这些中位数们的中位数：median_of_median
 4. 将数组按照median_of_median来分区：pos = partition(array, n, median_of_median);
 5. 如果pos == k，那就返回median_of_median，我们找到了第k小的元素；如果pos < k，那就对数组左边递归调用上述过程；如果pos > k，那就对数组右边递归进行上述过程。
+
+Leetcode Problems
+==========================
+- 1985. Find the Kth Largest Integer in the Array: https://leetcode.com/problems/find-the-kth-largest-integer-in-the-array/
+- 215. Kth Largest Element in an Array: https://leetcode.com/problems/kth-largest-element-in-an-array/
