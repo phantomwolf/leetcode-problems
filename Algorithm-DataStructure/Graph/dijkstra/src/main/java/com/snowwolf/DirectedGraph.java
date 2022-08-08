@@ -6,17 +6,17 @@ import java.util.PriorityQueue;
 
 class Edge implements Comparable<Edge> {
     // Vertex
-    public int vertex;
+    public int v;
     // Distance
-    public int distance;
+    public int cost;
 
-    public Edge(int vertex, int distance) {
-        this.vertex = vertex;
-        this.distance = distance;
+    public Edge(int v, int cost) {
+        this.v = v;
+        this.cost = cost;
     }
     @Override
     public int compareTo(Edge other) {
-        return distance - other.distance;
+        return cost - other.cost;
     }
 }
 
@@ -75,16 +75,16 @@ public class DirectedGraph {
         while (!pq.isEmpty()) {
             Edge v = pq.remove();
             // Ignore visited vertex
-            if (visited[v.vertex])
+            if (visited[v.v])
                 continue;
-            visited[v.vertex] = true;
+            visited[v.v] = true;
             // Add neighbors to priority queue
-            for (Edge w : adj[v.vertex]) {
-                if (visited[w.vertex])
+            for (Edge w : adj[v.v]) {
+                if (visited[w.v])
                     continue;
-                if (dist[w.vertex] > dist[v.vertex] + w.distance) {
-                    dist[w.vertex] = dist[v.vertex] + w.distance;
-                    pq.add(new Edge(w.vertex, dist[w.vertex]));
+                if (dist[w.v] > dist[v.v] + w.cost) {
+                    dist[w.v] = dist[v.v] + w.cost;
+                    pq.add(new Edge(w.v, dist[w.v]));
                 }
             }
         }
