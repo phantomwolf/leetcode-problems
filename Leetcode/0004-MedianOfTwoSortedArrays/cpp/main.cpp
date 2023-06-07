@@ -54,120 +54,42 @@ public:
     }
 };
 
-// kth
-// 设两个数组的长度分别为m和n。问题转化为求两个数组的第(m+n)/2
-class Solution2
-{
+// Binary search
+class Solution2 {
 public:
-    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
-        const int total = nums1.size() + nums2.size();
-        int len1 = nums1.size(), len2 = nums2.size();
-        int k = (total % 2 == 0) ? total/2 : total/2 + 1;
-        int l1 = 0, l2 = 0; // 边界
-        int a, b;
-        while (k != 1 && len1 != 0 && len2 != 0) {
-            int p1, p2; // 要比较的元素的下标
-            if (len1 <= len2) {
-                p1 = min(l1 + k/2, l1 + len1);
-                p2 = k + l1 + l2 - p1;
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int total = nums1.size() + nums2.size();
+        int half = total / 2;
+
+        if (nums1.size() > nums2.size()) {
+            std::swap(nums1, nums2);
+        }
+
+        int lo1 = 0, hi1 = nums1.size() - 1;
+        while (true) {
+            // Why not mi1 = (lo1 + hi1) / 2? Because if lo1 + hi1 is negative, std::floor will return 0 instead of -1
+            int mi1 = (int) std::floor((lo1 + hi1) / 2.0);
+            // [0, 1, ..., mi1 | mi1+1, ..., total-1] and [0, 1, ..., mi2 | mi2+1, ..., total-1]
+            // mi1 + 1 + mi2 + 1 == half
+            int mi2 = half - mi1 - 2;
+            int left1 = (mi1 >= 0) ? nums1[mi1] : INT_MIN;
+            int right1 = (mi1 + 1 < nums1.size()) ? nums1[mi1 + 1] : INT_MAX;
+            int left2 = (mi2 >= 0) ? nums2[mi2] : INT_MIN;
+            int right2 = (mi2 + 1 < nums2.size()) ? nums2[mi2 + 1] : INT_MAX;
+            if (left1 <= right2 && left2 <= right1) {
+                if (total % 2 == 0) {
+                    return static_cast<double>(std::max(left1, left2) + std::min(right1, right2)) / 2;
+                } else {
+                    return std::min(right1, right2);
+                }
+            } else if (left1 > right2) {
+                hi1 = mi1 - 1;
             } else {
-                p2 = min(l2 + k/2, l2 + len2);
-                p1 = k + l1 + l2 - p2;
-            }
-            if (nums1[p1 - 1] < nums2[p2 - 1]) {
-                k -= p1 - l1;
-                l1 = p1;
-                len1 = nums1.size() - l1;
-            } else if (nums1[p1 - 1] > nums2[p2 - 1]) {
-                k -= p2 - l2;
-                l2 = p2;
-                len2 = nums2.size() - l2;
-            } else {
-                a = nums1[p1 - 1];
-                if (total % 2 != 0)
-                    return a;
-                ++p1;
-                ++p2;
-                if (p1 - 1 == nums1.size())
-                    b = nums2[p2 - 1];
-                else if (p2 - 1 == nums2.size())
-                    b = nums1[p1 - 1];
-                else
-                    b = min(nums1[p1 - 1], nums2[p2 - 1]);
-                return (a + b) / 2.0;
+                lo1 = mi1 + 1;
             }
         }
-        if (len1 == 0) {
-            if (total % 2 != 0)
-                return nums2[l2 - 1 + k];
-            return (nums2[l2 - 1 + k] + nums2[l2 + k]) / 2.0;
-        }
-        if (len2 == 0) {
-            if (total % 2 != 0)
-                return nums1[l1 - 1 + k];
-            return (nums1[l1 - 1 + k] + nums1[l1 + k]) / 2.0;
-        }
-        // k == 1
-        if (nums1[l1] < nums2[l2]) {
-            a = nums1[l1];
-            ++l1;
-        } else {
-            a = nums2[l2];
-            ++l2;
-        }
-        if (total % 2 != 0)
-            return a;
-        if (l1 == nums1.size())
-            b = nums2[l2];
-        else if (l2 == nums2.size())
-            b = nums1[l1];
-        else
-            b = min(nums1[l1], nums2[l2]);
-        return (a + b) / 2.0;
     }
 };
-
-void prepare(vector<int> &nums, vector<int>::size_type nums_size)
-{
-    for (int i = 0; i < nums_size; ++i) {
-        nums.push_back(rand() % 100);
-    }
-    sort(nums.begin(), nums.end());
-}
-
-void print_nums(string name, const vector<int> &nums)
-{
-    vector<int>::const_iterator iter = nums.begin();
-    cout << name << ": ";
-    while (iter != nums.end()) {
-        cout << *iter << ", ";
-        ++iter;
-    }
-    cout << endl;
-}
-
-void merge_show(vector<int> &nums1, vector<int> &nums2)
-{
-    vector<int> res;
-    vector<int>::iterator iter = nums1.begin();
-    while (iter != nums1.end()) {
-        res.push_back(*iter);
-        ++iter;
-    }
-    iter = nums2.begin();
-    while (iter != nums2.end()) {
-        res.push_back(*iter);
-        ++iter;
-    }
-    sort(res.begin(), res.end());
-    iter = res.begin();
-    cout << "merged: ";
-    while (iter != res.end()) {
-        cout << *iter << ", ";
-        ++iter;
-    }
-    cout << endl;
-}
 
 int main()
 {

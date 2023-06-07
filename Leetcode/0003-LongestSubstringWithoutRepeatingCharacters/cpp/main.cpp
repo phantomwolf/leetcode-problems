@@ -2,34 +2,6 @@
 #include <vector>
 #include <string>
 
-class Solution1 {
-public:
-    int lengthOfLongestSubstring(std::string s) {
-        std::vector<int> index(256);
-        std::fill_n(index.begin(), 256, -1);
-        int l = 0, r;
-        int longest = 0;
-        for (r = 0; r < s.size(); r++) {
-            if (index[s[r]] != -1) {
-                // Add s[r] to sliding window will result in duplication
-                int length = r - l;
-                if (length > longest)
-                    longest = length;
-                while (l <= index[s[r]]) {
-                    index[s[l]] = -1;
-                    l++;
-                }
-            }
-            index[s[r]] = r;
-        }
-        int length = r - l;
-        if (length > longest) {
-            longest = length;
-        }
-        return longest;
-    }
-};
-
 class Solution2 {
 public:
     int lengthOfLongestSubstring(std::string s) {
@@ -57,9 +29,37 @@ public:
     }
 };
 
+class Solution3 {
+public:
+    int lengthOfLongestSubstring(std::string s) {
+        std::vector<int> index(256);
+        std::fill_n(index.begin(), 256, -1);
+        int l = 0, r;
+        int longest = 0;
+        for (r = 0; r < s.size(); r++) {
+            if (index[s[r]] != -1) {
+                // Add s[r] to sliding window will result in duplication
+                int length = r - l;
+                if (length > longest)
+                    longest = length;
+                while (l <= index[s[r]]) {
+                    index[s[l]] = -1;
+                    l++;
+                }
+            }
+            index[s[r]] = r;
+        }
+        int length = r - l;
+        if (length > longest) {
+            longest = length;
+        }
+        return longest;
+    }
+};
+
 int main()
 {
-    Solution1 s;
+    Solution2 s;
     std::cout << s.lengthOfLongestSubstring("pwwke") << std::endl;
     return 0;
 }
