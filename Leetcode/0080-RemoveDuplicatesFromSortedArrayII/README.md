@@ -44,7 +44,7 @@ It does not matter what you leave beyond the returned k (hence they are undersco
     nums is sorted in non-decreasing order.
 
 # Solution
-与26题类似，同样设置i指针扫描整个数组，j指针为写入位置。当满足以下任一条件时，将nums[i]写入nums[j]并j++：
+Similar to problem 26: we use 2 indexes k and i. k is for tracking writing position, while i is for scanning the array.
 
-1. 当遇到新的独特元素时：nums[i] != nums[i-1]
-2. 遇到重复元素，但尚未写入2个时。因为遇到了重复元素，即nums[i] == nums[i-1]，那么nums[i-1]必然在上一轮循环中被写入到nums[j-1]了。此时，如果nums[j-2] == nums[i]，那就说明nums[j-1]和nums[j-2]的值一样，都是nums[i]，表明已经写入了两个nums[i]，此时不应再写入nums[i]；如果j-2 < 0或者nums[j-2] != nums[i]，那就说明目前只写入了一个nums[i]，还能再写入一个，即`nums[j] = nums[i]; j++`。
+At first glance, it seems we need to compare nums[i] with both nums[k-2] and nums[k-1] before writing. However, we just need to compare nums[i] with nums[k-2]. Because, if nums[i] != nums[k-2], no matter what's the value of nums[k-1], we should always write nums[i] to nums[k].
+
