@@ -1,0 +1,17 @@
+# Backtracking
+Backtracking algorithms are like problem-solving strategies that help explore different options to find the best solution. They work by trying out different paths and if one doesn't work, they backtrack and try another until they find the right one. It's like solving a puzzle by testing different pieces until they fit together perfectly.
+
+## Explanation
+Backtracking is like traversing a multi-branch tree.
+
+## Recursive pseudocode
+
+```
+void backtrack()
+    if path is complete:
+        add path to result
+    for choice in choice_list:
+        make a choice/one step forward
+        recursively call backtrack()
+        cancel the choice/one step back
+```

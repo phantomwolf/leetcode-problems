@@ -21,7 +21,12 @@ Note:
 3. The target node is a node in the tree.
 4. 0 <= K <= 1000.
 
-# Solution 1
-Do a BFS from the target and track the distances at the same time.
+# Solution
+This problem is a graph problem, however we're given a tree. The tree has no parent node, which means we can't access a node's parent conveniently. To solve this, we can first build a HashMap<Integer, TreeNode> which stores mapping from TreeNode.val to its parent TreeNode.
 
-But there's one problem: TreeNode has no parent field. We'll have to do a traversal beginning from the tree root and record parent of each node inside a map.
+## Solution 1
+After building the parent node mapping, do a BFS from the target and track the distances at the same time.
+
+## Solution 2
+The graph we're given is a tree, which means there's no circle in it. This means we can do DFS without having to worry that a node is visited in a detour instead of its shortest path.
+

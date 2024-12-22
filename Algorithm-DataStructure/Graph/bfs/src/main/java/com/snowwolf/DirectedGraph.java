@@ -3,6 +3,7 @@ package com.snowwolf;
 import java.util.*;
 
 public class DirectedGraph {
+    // Adjacent matrix
     List<Integer>[] adj;
 
     // Number of vertice
