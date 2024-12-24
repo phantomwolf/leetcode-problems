@@ -15,3 +15,11 @@ void backtrack()
         recursively call backtrack()
         cancel the choice/one step back
 ```
+
+
+# Leetcode Problems
+
+* [39. Combination Sum](https://leetcode.com/problems/combination-sum/)
+* [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/description/)
+* [216. Combination Sum III](https://leetcode.com/problems/combination-sum-iii/description/)
+
