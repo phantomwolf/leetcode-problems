@@ -44,7 +44,12 @@ Why can this problem be solved using dynamic programming? Define dp(target) as t
 * Overlapping sub-problems: the results of sub-problems will be reused more than once. Suppose target = 3 and nums = [1,2], then dp(2) = dp(1) + dp(0), dp(3) = dp(2) + dp(1). We can see the result of dp(1) is reused.
 
 ## Solution 2: bottom-up dynamic programming
-Define dp[i] as the number of possible combinations that sum up to target:
+Define dp[i] as the number of possible combinations that sum up to i:
 
     dp[i] = dp[i-nums[0]] + dp[i-nums[1]] + ... + dp[i-nums[nums.length-1]]
 
+Time complexity: O(nums.length * target)
+Space complexity: O(target)
+
+## Solution 3: backtracking(time limit exceeded)
+Since the problem only ask us to calculate the number of combinations, not actually returning them, there's no need to use backtracking. Backtracking's time complexity is O(2^nums.length), which is much slower than dynamic programming.
