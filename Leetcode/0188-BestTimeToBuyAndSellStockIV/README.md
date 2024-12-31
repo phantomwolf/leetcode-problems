@@ -23,39 +23,59 @@ Constraints:
 * 0 <= prices.length <= 1000
 * 0 <= prices[i] <= 1000
 
-## DP solution
-Define dp[k][i] as the max profit using prices[0, i] with at most k transactions.
+## Solution 1: DP
+Define dp[i][j] as the max profit using prices[0, j) with at most i transactions.
 
 Base cases:
 
 * When no transactions allowed, profit is 0: `dp[0][j] = 0, j ∈ [0, prices.length-1]`
-* When only 1 price available, we won't be able to sell stock. Profit is 0: `dp[i][0] = 0, i ∈ [0, k]`
+* When no or only 1 price available, we won't be able to sell stock. Profit is 0: `dp[i][0] = 0, dp[i][1] = 0, i ∈ [0, k]`
 
-Suppose i transactions allowed in total, on day j (prices[j]), we have 2 choices:
+Suppose i transactions allowed at most, on day j (prices[j-1]), we have 2 choices:
 
 1. Don't sell stock. This way, the profit will be the same as the previous day: `dp[i][j] = dp[i][j-1]`
-2. Sell the stock. Suppose the stock was bought with prices[m], m ∈ [0,i), the profit will be the profit of this transaction `prices[i] - prices[m]`, plus the profit of previous transactions: `dp[i][j] = dp[i-1][m] + prices[i] - prices[m]`.
+2. Sell the stock. Suppose the stock was bought with prices[m], m ∈ [0,j-1), the profit will be the profit of this transaction `prices[j-1] - prices[m]`, plus the profit of previous transactions `dp[i-1][m]`:
+
+    dp[i][j] = dp[i-1][m] + prices[j-1] - prices[m]
 
 So the overall expression will be:
 
-    dp[i][j] = max(dp[i][j-1], max(dp[i-1][m] + prices[i] - prices[m])), m ∈ [0,j)
-
-**Question: `dp[i-1][m] + prices[i] - prices[m]` indicates we can buy and sell on the same day with prices[m]. Why is this ok?**
-
-Because if we sell and buy on the same day, we'll waste 1 transaction, but it won't affect the profit. Wasting 1 transaction doesn't sound good, but since we're looking for the max profit, this sub-optimal answer will be ignored.
+    dp[i][j] = max(dp[i][j-1], max(dp[i-1][m] + prices[j-1] - prices[m])), m ∈ [0,j-1)
 
 If the length of prices array is n:
 
     time complexity: O(k * n^2)
     space complexity: O(kn)
 
-## Optimized DP solution
+## Solution 2: Optimized DP
 By using a variable to track the max value of an expression, we can get rid of the inner most loop and reduce the time complexity to O(nk).
 
 In the previous solution,
 
-    dp[i][j] = max(dp[i][j-1], max(dp[i-1][m] + prices[i] - prices[m])), m ∈ [0,j)
+    dp[i][j] = max(dp[i][j-1], max(dp[i-1][m] + prices[j-1] - prices[m])), m ∈ [0,j-1)
 
-and we have to use another loop to find the optimal m which makes `dp[i-1][m] + prices[i] - prices[m]` as large as possible.
+and we have to use another loop to find the optimal m which makes `dp[i-1][m] + prices[j-1] - prices[m]` as large as possible.
 
-Let's look at `dp[i-1][m] + prices[i] - prices[m]`. Within this expression, prices[i] won't change as m changes, so we just need to find the max value of `dp[i-1][m] - prices[m]`. As we are iterating j, we can use a variable `localMax` to track the value of `dp[i-1][m] - prices[m]`, always prefering larger value. Then any moment, this `localMax` will be the largest `dp[i-1][m] - prices[m]`, which works exactly the same as a loop.
+Let's go through the loop:
+
+```java
+            for (int j = 2; j <= prices.length; j++) {
+                // If we don't sell with prices[j-1]
+                dp[i][j] = dp[i][j - 1];
+                // If we decide to sell with prices[j-1], we'll have to buy the stock before
+                // prices[j-1], which is [0, j-1). Suppose prices[m] is the buying price:
+                for (int m = 0; m < j - 1; m++) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][m] + prices[j - 1] - prices[m]);
+                }
+            }
+```
+
+First iteration: j = 2, m is in range [0, 0], value of `dp[i - 1][m] - prices[m]` is `dp[i-1][0] - prices[0]`.
+
+Second iteration: j = 3, m is in range [0, 1], value of `dp[i - 1][m] - prices[m]` is `dp[i-1][0] - prices[0]` and `dp[i-1][1] - prices[1]`
+
+Third iteration: j = 4, m is in range [0, 2], value of `dp[i - 1][m] - prices[m]` is `dp[i-1][0] - prices[0]`, `dp[i-1][1] - prices[1]`, and `dp[i-1][2] - prices[2]`.
+
+We can see values of `dp[i - 1][m] - prices[m]` are repreatedly calculated. Instead, we can use a variable `localMax` to track its max value.
+
+Let's look at `dp[i-1][m] + prices[j-1] - prices[m]`. Within this expression, prices[j-1] won't change as m changes, so we just need to find the max value of `dp[i-1][m] - prices[m], m ∈ [0,j-1)`. As we are iterating j, we can use a variable `localMax` to track the value of `dp[i-1][m] - prices[m]`, always prefering larger value. Then any moment, this `localMax` will be the largest `dp[i-1][m] - prices[m]`, which works exactly the same as a loop.
