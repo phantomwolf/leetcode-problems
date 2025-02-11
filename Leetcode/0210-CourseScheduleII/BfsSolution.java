@@ -1,4 +1,4 @@
-class Solution {
+class BfsSolution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] result = new int[numCourses];
         // Build graph

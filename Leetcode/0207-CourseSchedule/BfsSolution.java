@@ -1,8 +1,11 @@
-class Solution {
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] result = new int[numCourses];
+package main;
+
+class BfsSolution {
+    // BFS
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // In degree
+        int[] indegrees = new int[numCourses];
         // Build graph
-        int[] indegree = new int[numCourses];
         List<Integer>[] graph = new LinkedList[numCourses];
         for (int v = 0; v < numCourses; v++) {
             graph[v] = new LinkedList<>();
@@ -12,32 +15,39 @@ class Solution {
             int from = pre[1];
             int to = pre[0];
             graph[from].add(to);
-            indegree[to]++;
+            indegrees[to]++;
         }
         // BFS
-        int count = 0; // How many vertice have been visited?
         Queue<Integer> q = new LinkedList<>();
-        // Add all vertice with 0 in-degree into queue
+        // Enqueue all vertice with 0 in-degree
         for (int v = 0; v < numCourses; v++) {
-            if (indegree[v] == 0) {
+            if (indegrees[v] == 0) {
                 q.add(v);
             }
         }
+        int count = 0; // How many vertice have been visited?
         while (!q.isEmpty()) {
             int v = q.poll();
-            result[count] = v;
             count++;
-            // Reduce the in-degree of its neighbors and enqueue if needed
+            // Reduce in-degrees of its neighbors
             for (int u : graph[v]) {
-                indegree[u]--;
-                if (indegree[u] == 0) {
+                indegrees[u]--;
+                if (indegrees[u] == 0) {
+                    // Vertex u has 0 in-degree now. No vertex depends on it. We can visit it now.
                     q.add(u);
                 }
             }
         }
         if (count == numCourses) {
-            return result;
+            // All vertice have been visited. No cycle.
+            return true;
         }
-        return new int[0];
+        return false;
     }
+
 }
+
+    
+
+                  
+                
