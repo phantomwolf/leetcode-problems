@@ -9,5 +9,5 @@ plugins {
 }
 
 application {
-    mainClass.set("com.snowwolf.UnionFindMain")
+    mainClass.set("com.snowwolf.Main")
 }

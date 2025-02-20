@@ -34,7 +34,10 @@ Explanation: There is no celebrity.
 
 Follow up: If the maximum number of allowed calls to the API knows is 3 * n, could you find a solution without exceeding the maximum number of calls?
 
-## Solution
+## Solution 1: in degree and out degree
+Based on the definition of celebrity, its in degree should be n-1 and out degree should be 0. Call knows() to calculate the in degree and out degree of each node to find out the celebrity.
+
+## Solution 2: method of exclusion
 Suppose 0 is the celebrity. Iterate through the remaining people: if anyone doesn't know 0, or 0 knows anyone, 0 is definitely not a celebrity. Now we modify our assumption and suppose the other person is the celebrity.
 
 Repeat the above progress until we've excluded all but one person. Then we do a final check to see if the last person remaining is a celebrity.
