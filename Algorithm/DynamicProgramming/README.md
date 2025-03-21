@@ -4,6 +4,7 @@
 * 198. House Robber [Medium]
 * 139. Word Break [Medium]
 * 188. Best Time to Buy and Sell Stock IV [Hard]
+* [2510. Check if There is a Path With Equal Number of 0's And 1's](https://leetcode.com/problems/check-if-there-is-a-path-with-equal-number-of-0s-and-1s/description/)
 
 # 动态规划
 动态规划是一种算法范式(algorithmic paradigm)，它将复杂的问题分解为较小的子问题，并且存储这些子问题解，以避免重复求解。
