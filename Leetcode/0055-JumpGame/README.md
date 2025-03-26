@@ -20,8 +20,16 @@ Constraints:
 * 1 <= nums.length <= 104
 * 0 <= nums[i] <= 105
 
-## DP Solution
-Define dp[i] as the farthest index can be reached with nums[0, i].
+## Solution 1: DFS
+If we see each index as a node in a graph, this can be solved by DFS. In example 1, nums[0] = 2, which means we can jump to [1, 2]. In other words, node 0 is adjacent with node 1 and 2.
+
+Use DFS to visit the nodes. If we can reach the last index nums.size()-1, it means we can jump to the last index.
+
+## Solution 2: BFS
+Similar to solution 1, but this time we use BFS.
+
+## Solution 3: Dynamic Programming 
+Define dp[i] as the farthest index can be reached from any position in range [0, i]. In example 1, nums[1] = 3, nums[2] = 1, dp[2] = 4.
 
 Base case: we can reach range [0, nums[0]] from index 0.
 
@@ -48,7 +56,7 @@ Time complexity: O(n^2). Space complexity: O(n).
 **Optimization**: The inner loop is just for calculating the largest value of `dp[0], dp[1], ..., dp[i-1]`. We can use a variable to track the largest value of dp[j]. Thus:
 
 ```java
-int currMax = Integer.MIN_VALUE;
+int currMax = dp[0];
 for (int i = 1; i < nums.length; i++) {
     currMax = Math.max(dp[i - 1], currMax);
     if (currMax < i) {
@@ -63,5 +71,13 @@ for (int i = 1; i < nums.length; i++) {
 
 Time complexity: O(n). Space complexity: O(n).
 
-## Greedy Solution
-Define `currMax` as the farthest index we can reach so far. At the beginning, we're at index 0, and the farthest index we can reach is nums[0], which means we can reach [0, nums[0]]. So we can continue scaning indexes in [0, nums[0]], and keep updating `currMax`. If at some moment, `currMax >= nums.length - 1`, this means we can reach the last index; if we reached currMax and `currMax < nums.length - 1`, this means we can't go any further and it's impossible to reach the last index.
+**Further optimization**: we can see within the loop, only dp[i-1] and dp[i] are involved. This means we don't need an dp array to store the values. After further optimization, this solution will become solution 4: Greedy Solution.
+
+## Solution 4: Greedy Solution
+Define `currMax` as the farthest index we can reach from the positions we've scanned so far.
+
+At the beginning, the farthest index we can reach is `currMax = 0`.
+
+From 0, we can reach [1, nums[0]], so we continue scanning to `currMax = nums[0]`. Meanwhile, we keep updating currMax as we scan new elements.
+
+If at any given time, currMax >= lastIndex, it means we can jump to the last index.

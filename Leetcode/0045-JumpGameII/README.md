@@ -23,13 +23,48 @@ Constraints:
 * 1 <= nums.length <= 104
 * 0 <= nums[i] <= 1000
 
-## Greedy Solution
-Same as Leetcode 55 Jump Game. For each step, we try to jump as far as possible. For input `nums = [3, 1, 3, 1, 0, 1, 1]`
+## Solution 1: BFS
+If we see each index as a node in a graph, and each index we can jump to as adjacent nodes, this problem can be solved by BFS.
 
-Starting from index 0, we can just 3 positions at most, which means we can reach index range [1, 3] with 1 jump.
+## Solution 2: Greedy BFS
+Same as Leetcode 55 Jump Game.
 
-Then we try to jump as far as possible from one position within [1, 3]. From index 2, we can jump 3 positions, which is the farthest. So the 2nd jump will be from index 2 to somewhere within [3, 5].
+Suppose nums = [2,3,1,1,4]. From index 0, we can jump to range [1, 2]. With the BFS solution, node 0 is adjacent to node 1 and 2: we first visit node 0, then visit its neighbors 1 and 2. Then we continue from 1 and 2 to their neighbors.
 
-From indexes within [3, 5], the farthest we can jump is from index 5 to the last index. This is the 3rd jump.
+But is it really necessary to visit all the neighbors?
 
-Conclusion: 0 -> 2 -> 5 -> 6.
+1. From index 1, we can jump to range [2, 4]
+2. From index 2, we can jump to range [2, 3]
+
+To reach the last index with minimum steps, option 1 is clearly better than 2. In fact, there's no need to consider option 2 at all. However, in the BFS solution, both option 1 and 2 are considered.
+
+We can use greedy here. For all the adjacent nodes of index i, we only consider the one which allows us to jump to the farthest index, and continue from there. Meanwhile, we use a variable to track the steps.
+
+```c++
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        // [left, right] is the range we can jump to using the next step
+        int left = 0, right = 0;
+        int steps = 0;
+        while (true) {
+            if (right == nums.size()-1) {
+                return steps;
+            }
+
+            int currMax = numeric_limits<int>::min();
+            for (int i = left; i <= right; i++) {
+                currMax = max(currMax, i+nums[i]);
+            }
+            // Update range
+            if (currMax <= right) {
+                // Can't jump farther
+                return -1;
+            }
+            left = right+1;
+            right = min(currMax, static_cast<int>(nums.size()-1));
+            steps++;
+        }
+    }
+};
+```
