@@ -13,3 +13,4 @@ Continue BFS until queue is empty. If all vertice have been visited, there's no 
 * 207. Course Schedule
 * 210. Course Schedule II
 * 310. Minimum Height Trees
+* 1857. Largest Color Value in a Directed Graph
