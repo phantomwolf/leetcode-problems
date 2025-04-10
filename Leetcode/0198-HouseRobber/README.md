@@ -29,3 +29,5 @@ Recursive solution: 2 possible ways to rob houses. Suppose there're n houses in 
 2. Use the optimal way to rob houses in range [0, n-2]. Don't rob nums[n-1].
 
 We don't know which way will generate the best result. So we use Math.max() to get the greater value between them.
+
+If we observe carefully, `dp[i] = max(dp[i-2] + nums[i-1], dp[i-1])`. dp[i] only relies on dp[i-2] and dp[i-1]. Thus we only need 3 variables instead of a dp[] array.
