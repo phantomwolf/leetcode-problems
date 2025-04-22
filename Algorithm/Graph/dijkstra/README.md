@@ -46,5 +46,5 @@ Dijkstra's Algorithm is similar to BFS, but with a few differences:
 ## Leetcode Problems
 See the following leetcode problems
 
-* Leetcode/0505-TheMazeII
-* Leetcode/2297-JumpGameVIII
+* [Leetcode/0505-TheMazeII](../../../Leetcode/0505-TheMazeII/README.md)
+* [Leetcode/2297-JumpGameVIII](../../../Leetcode/2297-JumpGameVIII/README.md)

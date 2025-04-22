@@ -39,15 +39,37 @@ Output: 1
 * 0 <= amount <= 5000
 
 ## Solution: dynamic programming
-Note that the problem asks for combinations, instead of permutations. This means the order of the coins doesn't matter, and we don't want duplicated ones.
+Note that the problem asks for combinations, instead of permutations.
 
-Define dp[i][j] as the number of possible combinations which sum up to i, given only coins in [0, j) can be used. Then dp[amount][coins.length] is the answer we want to calculate.
+Define dp[i][j] as the number of possible combinations which sum up to amount `j`, given only coins in [0, i) can be used. Then dp[coins.length][amount] is the answer we want to calculate.
 
 The combinations related to dp[i][j] can be categorized into 2 types:
 
-1. Combinations without coins[j-1]: without using coins[j-1], the number of combinations is the same as dp[i][j-1]
-2. Combinations with one or more coins[j-1]: with coins[j-1], first we subtract coins[j-1] from i, then we use coins from [0, j) to sum up to i-coins[j-1]. The range [0, j) doesn't change, because a coin can be used unlimited times. This category has dp[i-coins[j-1]][j] combinations if i-coins[j-1] >= 0.
+1. Combinations without `coins[i-1]`: without using `coins[i-1]`, the number of combinations is the same as `dp[i-1][j]`
+2. Combinations with one or more `coins[i-1]`: with `coins[i-1]`, first we subtract `coins[i-1]` from amount `j`, then we use coins from `[0, i)` to sum up to `i-coins[j-1]`. The range [0, j) doesn't change, because a coin can be used unlimited times. This category has `dp[i][j-coins[i-1]]` combinations if `i-coins[j-1] >= 0`:
 
-    dp[i][j] = dp[i][j-1] + dp[i-coins[j-1]][j]
+```go
+for i := 1; i <= len(coins); i++ {
+	for j := 1; j <= amount; j++ {
+        dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]]     // Remember to handle out of index issue
+    }
+}
+```
 
+### Space optimization
+dp[i][j] only relies on 2 values:
 
+* `dp[i-1][j]`: in the 2D dp[][] matrix, it's from the row above. If we use 1D array, it will be dp[j] from the previous iteration.
+* `dp[i][j-coins[i-1]]`: in the 2D dp[][] matrix, it's from the same row. If we use 1D array, it will be dp[j-coins[i-1]]. Here we still need the `i` index to find the right coin. To make it more readable, we use variable `currCoin` to replace i.
+
+```go
+for currCoin := 0; currCoin < len(coins); currCoin++ {
+    for i := 1; i <= amount; i++ {
+        if i >= coins[currCoin] {
+            dp[i] += dp[i-coins[currCoin]]
+        }
+    }
+}
+```
+
+Note that space optimization doesn't change the time complexity: still 2 layers of loops.

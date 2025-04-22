@@ -1,17 +1,12 @@
 #include <algorithm>
-#include <queue>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
-#include <vector>
-
-using namespace std;
 
 /*
 Input: beginWord = "hit", endWord = "cog", wordList =
 ["hot","dot","dog","lot","log","cog"] Output: 5
 
-comboDict: {
+dict: {
     *ot => [hot, dot, lot], h*t => [hot], ho* => [hot],
     d*t => [dot], do* => [dot, dog],
     *og => [dog, log, cog], d*g => [dog],
@@ -21,20 +16,20 @@ comboDict: {
 }
 
 q = [{hit, 1}], visited = {hit}
-newWord = *it|h*t|hi*, q = [{hot, 2}]
-newWord = *ot|ho* q = [{dot, 3}, {lot, 3}]
-newWord = d*t|do*|l*t|lo*, q = [{}]
+maskedWord = *it|h*t|hi*, q = [{hot, 2}]
+maskedWord = *ot|ho* q = [{dot, 3}, {lot, 3}]
+maskedWord = d*t|do*|l*t|lo*, q = [{}]
 */
 class Solution {
  public:
   int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
     int length = beginWord.size();
     // Preprocessing
-    unordered_map<string, vector<string>> comboDict;
+    unordered_map<string, vector<string>> dict;
     for (const string& w : wordList) {
       for (int i = 0; i < length; i++) {
-        string newWord = w.substr(0, i) + "*" + w.substr(i + 1, length);
-        comboDict[newWord].push_back(w);
+        string maskedWord = w.substr(0, i) + "*" + w.substr(i + 1, length);
+        dict[maskedWord].push_back(w);
       }
     }
     // BFS
@@ -47,13 +42,9 @@ class Solution {
       q.pop();
       // Visit its neighbors
       for (int i = 0; i < length; i++) {
-        string newWord =
+        string maskedWord =
             p.first.substr(0, i) + "*" + p.first.substr(i + 1, length);
-        auto it = comboDict.find(newWord);
-        if (it == comboDict.end()) {
-          continue;
-        }
-        for (string& w : it->second) {
+        for (string& w : dict[maskedWord]) {
           if (visited.contains(w)) {
             continue;
           }

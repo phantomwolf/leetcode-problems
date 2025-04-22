@@ -2,68 +2,40 @@
 Typical graph coding problems by importance:
 
 1. DFS, BFS
-2. Topological sorting
-   1. Course schedule
-   2. Minimum Height Tree
-   3. Longest path(1857. Largest Color Value in a Directed Graph)
-3. Cycle detection
-4. Shortest path: Dijkstra's Algorithm
+2. Cycle detection
+3. Topological sorting
+4. Shortest path: Dijkstra's Algorithm, or BFS
 
-## DFS
+## Less frequent problems
+### Eulerian Path 
 
-## BFS
+* Leetcode problem: 332. Reconstruct Itinerary
 
-## Cycle detection
-To detect cycles in a graph, I usually prefer DFS because it doesn't require a queue.
+Eulerian Path (also called Eulerian Trail) is a path in a finite graph that visits every edge exactly once. There is a concept named Eulerian Circuits (or Eulerian Cycle) that restricts Eulerian Path conditions further. It is still an Eulerian Path and it starts and ends at the same vertex.
 
-Time complexity: O(V*E)
-Space complexity: O(V)
+There are Euler Path conditions that graphs must have:
+For an undirected graph
 
-### Directed Graph
-Compared to a typical DFS, cycle detection algorithm introduces another hash map(or array if node ids are numbers) named `onPath` to record if a specific node is on current traversal path. When we visit a node, set `onPath[node] = true`; when we leave a node, set `onPath[node] = false`. If we're trying to visit a node, but it's already on path, this means: we've reached that node before, but there's a cycle in the graph which leads us back to the node again. In other words, a cycle has been detected.
+* Every vertex should have an even degree or only two vertices should have odd degrees.
 
-`onPath` map doesn't conflict with `visited` map. In fact, they're both needed:
+For a directed graph
 
-* `onPath` records if a node is on current DFS traversal path. If yes, a cycle has been detected.
-* `visited` records if a node has been visited before. If yes, simply skip it.
+* Each vertex should have the same in-degree and out-degree except for two of them.
+* One of these vertex will be the start vertex which has one more out-going edge than in-going edges. The other one will be the end vertex which has one more in-going edge than out-going edges.
 
-Note that `onPath` needs to be checked before `visited`(because if a node is onPath, clearly it was visited before).
+The following conditions determine whether a graph has an Eulerian Cycle or not on top of Eulerian Path conditions:
+For an undirected graph
 
-```go
+* Each vertex should have an even degree.
 
-```
+For a directed graph
 
-### Undirected Graph
-Undirected graph is a bit more complicated than directed graph, becuase it contains "trivial cycles" like `A -> B -> A`. For example: when we're visiting A, of course `visited[A] = true` and `onPath[A] = true`. Next, we proceed to visit B. However, when we're visiting all neighbors of B, we'll find A is a neighbor of B as well, and A is already on path. But it's not actually a cycle, it's just an undirected edge. **We need a way to skip A when visiting all neighbors of B.**
+* Every vertex should have equal in-degree and out-degree edges.
 
-To achieve this, we add a `prevNode` parameter to the DFS function, which is the previous node we've visited. When we visit B, `prevNode = A`. When visiting all neighbors of B, we skip `prevNode = A` to avoid trivial cycles.
+**Hierholzer’s Algorithm** can build an Eulerian Path. It works similar to a post-order traversal: visiting all its neighbors before visiting a node
 
-```go
-func hasCycle(graph [][]int, prevNode int, node int, onPath []bool, visited []bool) bool {
-    if onPath[node] {
-        // node already on path. Cycle detected
-        return true
-    }
-    if visited[node] {
-        // node already visited. Skip.
-        return false
-    }
-    visited[node] = true
-    onPath[node] = true
-    // Neighbors
-    for _, v := range graph[node] {
-        if v == prevNode {
-            // Ignore previous node on the path
-            continue
-        }
-        if hasCycle(graph, node, v, onPath, visited) {
-            return true
-        }
-    }
-    onPath[node] = false
-    return false
-}
-```
-
-## Topological sort
-Topological sort can be done using DFS or BFS.
+1. Choose any arbitrary vertex as a starting point.
+2. Remove an outging edge, and follow it to recursively traverse its neighbors.
+3. Repeat 2 until there's no outgoing edges for this node
+4. Append this node to the path array
+5. After all nodes have been visited, reverse the path array
