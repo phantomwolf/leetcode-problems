@@ -27,6 +27,8 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 There're only 3 types of elements: 0, 1, 2. We can scan the input array and count the amount of each element with 3 variables. Then on the 2nd pass, we write these elements into the array.
 
 ## Solution 2: dutch national flag problem(1 pass)
+This is also the 3-way partition algorithm used in quick sort.
+
 Use 3 pointers to track locations:
 
 1. p0 tracks the writing position of 0 elements
