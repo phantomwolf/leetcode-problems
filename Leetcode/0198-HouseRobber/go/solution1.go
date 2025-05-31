@@ -1,11 +1,14 @@
 func rob(nums []int) int {
-	// Define dp[i] as the max amount of money you can rob using elements in range [0, i)
-	dp := make([]int, len(nums)+1)
-	// Base case
-	dp[0] = 0
-	dp[1] = nums[0]
-	for i := 2; i <= len(nums); i++ {
-		dp[i] = max(dp[i-2]+nums[i-1], dp[i-1])
+	n := len(nums)
+	if n == 1 {
+		return nums[0]
 	}
-	return dp[len(nums)]
+	// Define dp[i] as max gain of robbing houses [i, n)
+	dp := make([]int, n+1) // for convenience, dp[n] = 0
+	// Base case
+	dp[n-1] = nums[n-1] // Only 1 house available
+	for i := n - 2; i >= 0; i-- {
+		dp[i] = max(nums[i]+dp[i+2], dp[i+1])
+	}
+	return dp[0]
 }

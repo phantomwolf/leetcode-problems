@@ -21,6 +21,44 @@
 像分治法一样，动态规划需要合并子问题的解。动态规划多用于需要重复计算子问题的解的情况，它将子问题的解存入一个数组，之后需要时直接读取，提高了性能。所以当子问题不需要重复求解时(例如归并排序)，动态规划是没有意义的，因为不需要存储子问题的解(这时可以用分治法divide and conquer)。
 
 ## 问题
+### House Robber 打家劫舍问题
+本类问题的特点：
+
+1. 在一个位置i，我们必须选择“采取行动”或者“跳过”
+2. 如果选择跳过，问题转化为问题i+1
+3. 如果选择行动，接下来的一个或多个位置，我们将无法采取行动。
+
+例题:
+
+* [198. House Robber](../../Leetcode/0198-HouseRobber/README.md): Need to rob houses [0, n). At i-th house, choose "rob" or "skip". If "rob", we can't rob house i+1; if skip, the problem is converted to robbing the remaining houses [i+1, n).
+* [2140. Solving Questions with Brainpower](../../Leetcode/2140-SolvingQuestionsWithBrainpower/README.md): Need to solve questions [0, n). At i-th question, choose "solve" or "skip". If "solve", we can solve the following `brainpower_i` questions; if "skip", the problem is converted to solving problems [i+1, n).
+* [983. Minimum Cost For Tickets](../../Leetcode/0983-MinimumCostForTickets/README.md): for day i, buy 1-day/7-day/30-day pass and jump to the next day.
+
+These problems can be easily solved if we calculate the dp[] array in reverse order: dp[n-1], dp[n-2], ..., dp[0]. This is because after performing an action, we jump right. It's easy to know how many positions we need to jump right, but difficult to know where we jumped from.
+
+### 188 Best Time to Buy and Sell Stock IV  买卖股票问题
+本题是股票买卖系列问题里最generic的一个。每一天，我们都可以采取三种动作：
+
+* rest: 什么也不干
+* buy: 买股票(仅限当前未持有股票时)
+* sell: 卖掉之前购买的股票
+
+设dp[i][j][s]为以下条件时的最大利润：
+
+* i为天数
+* j为允许的transaction数
+* s为status: s=0表示在rest或sell后，未持有股票；s=1表示在rest或buy后，当前持有股票。
+
+因此dp[i][j][s]的值有两种可能，我们取较大的那个值:
+
+    dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]);
+    dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]);
+
+Base case:
+
+* 当i=0时，只有第一天，所以只能buy或rest: dp[0][j][1] = -prices[0], dp[0][j][0] = 0
+* 当j=0时，不允许任何transaction，因此利润为0：dp[i][0][0] = 0
+
 ### Longest Increasing Subsequence(LIS)
 Longest Increasing Subsequence：在一个序列（比如一个数组）中，找出最长的子序列的长度，使其所有元素递增。子序列不要求连续。
 
