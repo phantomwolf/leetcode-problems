@@ -5,6 +5,7 @@ For actual codes, see the leetcode problems below.
 
 * [207. Course Schedule](../../../Leetcode/0207-CourseSchedule/README.md)
 
+
 ### DFS
 Time complexity: O(V*E)
 Space complexity: O(V)
@@ -23,7 +24,7 @@ Why is `visited` not enough? Because in directed graph, revisiting a node doesn'
 Note that `onPath` needs to be checked before `visited`(because if a node is onPath, clearly it was visited before).
 
 ### BFS
-It's not recommended to use plain BFS to do cycle detection for directed graph.Although it's possible to maintain a path during BFS traversal(you'll have to push each path to the queue), it's cumbersome and space-inefficient to do so.
+It's not recommended to use plain BFS to do cycle detection for directed graph. Although it's possible to maintain a path during BFS traversal(you'll have to push each path to the queue), it's cumbersome and space-inefficient to do so.
 
 We can use Kahn’s Algorithm(which is used for topological sorting) to do cycle detection: tracking the indegrees of each node, and push those with 0 indegrees into queue. When the queue becomes empty, if not all nodes are visited, it means there's a cycle in the graph.
 

@@ -22,9 +22,15 @@ Constraints:
 * ai != bi
 * There are no self-loops or repeated edges.
 
-## Solution 1: DFS + onPath + parent
+## Solution
+The graph is a tree when it:
+
+* is fully connected
+* has no cycle
+
+### Solution 1: DFS + onPath + parent
 See [cycle detection](../../Algorithm/Graph/cycle-detection/README.md)
 
-## Solution 2: BFS + parent
+### Solution 2: BFS + parent
 
 See [cycle detection](../../Algorithm/Graph/cycle-detection/README.md)
