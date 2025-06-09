@@ -8,29 +8,35 @@ import (
 )
 
 func lengthOfLongestSubstring(s string) int {
-    var m = make(map[uint8]int)
-    var longest int = -1
-    var left int = 0        // left bound of current window
-    for i, c := range s {
-        pos, ok := m[uint8(c)]
-        if !ok || pos < left {
-            m[uint8(c)] = i
-            continue
-        }
-        // We got a possible answer
-        if i - left > longest {
-            longest = i - left
-        }
-        // Proceed to next
-        left = pos + 1
-        m[uint8(c)] = i
+    if len(s) == 0 {
+        return 0
     }
-    // Last possible answer
-    if len(s) - left > longest {
-        longest = len(s) - left
+    // sliding window
+    res := 0
+    count := make(map[byte]int)
+    repeat := 0
+    left, right := 0, 0
+    for right < len(s) {
+        // Expand window
+        c := s[right]
+        right++
+        count[c]++
+        if count[c] == 2 {
+            repeat++
+        }
+        // Update result
+        if repeat == 0 {
+            res = max(res, right-left)
+        }
+        // Shrink window
+        for repeat > 0 {
+            d := s[left]
+            left++
+            count[d]--
+            if count[d] == 1 {
+                repeat--
+            }
+        }
     }
-    return longest
-}
-
-func main() {
+    return res
 }

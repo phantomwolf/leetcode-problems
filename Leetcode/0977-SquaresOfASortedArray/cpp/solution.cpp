@@ -1,32 +1,23 @@
 #include <cmath>
+#include <vector>
+
+using namespace std;
 
 class Solution {
- public:
-  vector<int> sortedSquares(vector<int>& nums) {
-    vector<int> res;
-    // Find the boundary of negative and positive elements
-    int i = 0;
-    while (i < nums.size() && nums[i] < 0) {
-      i++;
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n);
+        int i = 0, j = n-1;
+        for (int k = n-1; k >= 0; k--) {
+            if (abs(nums[i]) < abs(nums[j])) {
+                res[k] = nums[j] * nums[j];
+                j--;
+            } else {
+                res[k] = nums[i] * nums[i];
+                i++;
+            }
+        }
+        return res;
     }
-    int j = i - 1;
-    while (j >= 0 || i < nums.size()) {
-      int val;
-      if (j < 0) {
-        val = nums[i];
-        i++;
-      } else if (i >= nums.size()) {
-        val = nums[j];
-        j--;
-      } else if (abs(nums[j]) < abs(nums[i])) {
-        val = nums[j];
-        j--;
-      } else {
-        val = nums[i];
-        i++;
-      }
-      res.push_back(val * val);
-    }
-    return res;
-  }
 };

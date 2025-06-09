@@ -42,5 +42,5 @@ The algorithm:
 3. Initialise the index of the current element to consider: curr = 0.
 4. While curr <= p2 :
     a. If nums[curr] = 0: swap currth and p0th elements and move both pointers to the right.
-    b. If nums[curr] = 2: swap currth and p2th elements. Move pointer p2 to the left. Do NOT move curr because if the element swapped to curr is 0, we need to move it to p0 in the next iteration.
+    b. If nums[curr] = 2: swap currth and p2th elements. Move pointer p2 to the left. **Do NOT move curr** because if the element swapped to curr is 0, we need to move it to p0 in the next iteration.
     c. If nums[curr] = 1: move pointer curr to the right.

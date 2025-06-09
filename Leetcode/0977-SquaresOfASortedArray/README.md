@@ -24,8 +24,32 @@ Follow up: Squaring each element and sorting the new array is very trivial, coul
 ## Solution
 This problem is similar to merging two sorted arrays.
 
-In example 2, do the following:
+In example 2, the input array can be divided into two parts: `[-7,-3 | 2,3,11]`. Both parts are sorted, but in different order. We can introduce 3 indexes:
 
-1. Find the boundary of negative and positive elemtns: `[-7,-3 | 2,3,11]`
-2. Use 2 pointers: `left` starting from -3 and moving left, `right` starting from 2 and moving right. Note that both abs(nums[left]) and abs(nums[right]) are increasing.
-3. Each time choose the smaller one between `nums[left]` and `nums[right]`, and add its square to result.
+* `i = 0` and moves to the right.
+* `j = n-1` and moves to the left.
+* `k = n-1` and moves to the left. Used for writing index of the result.
+
+Each time, we compare `abs(nums[i])` and `abs(nums[j])`, choose the greater one to calculate the square and write to result.
+
+Algorithm:
+
+    i = 0, j = n-1, k = n-1
+    if (abs(nums[i]) < abs(nums[j])) {
+        result[k] = nums[j] * nums[j]
+        j--
+        k--
+    } else {
+        result[k] = nums[i] * nums[i]
+        i++
+        k--
+    }
+
+**What if `i` or `j` cross the boundary of negative and positive numbers?**
+
+This won't be a problem. In example 2, if at some point, `i` points to 2 and `j` points to 3:
+
+    [-7, -3|2, 3, 11]
+            i  j
+
+Even `i` crossed the boundary, `abs(nums[i])` won't be greater than `abs(nums[j])`, as the latter part of `nums[]` is sorted as well. So it won't affect our algorithm.
