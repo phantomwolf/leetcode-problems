@@ -34,7 +34,7 @@ Given any two indexes `left` and `right`, `left < right`, the area will be: `(ri
 
 Algorithm:
 
-1. Let left and right start from both ends: `left = 0, right = height.size()-1`. This guarantees `(right - left)` will be the greatest. Calculate the area.
+1. Let `left` and `right` start from both ends: `left = 0, right = height.size()-1`. This guarantees `(right - left)` will be the greatest. Calculate the area.
 2. Compare `height[left]` and `height[right]` to see which is the bottleneck.
    1. When `height[left] < height[right]`, if we let `left++`, we may find a greater `height[left]` which makes area greater.
    2. When `height[left] > height[right]`, if we let `right--`, we may find a greater `height[right]` which makes area greater.
