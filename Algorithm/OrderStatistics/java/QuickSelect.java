@@ -5,16 +5,16 @@ class QuickSelect {
      * Quick select algorithm: select the kth(starting from 0) smallest number in sorted order inside an array
      */
     public int quickSelect(int[] nums, int k) {
-        int low = 0, high = nums.length - 1;
+        int left = 0, right = nums.length - 1;
         while (true) {
-            int pivot = partition(nums, low, high);
+            int pivot = partition(nums, left, right);
             if (pivot == k) {
                 return nums[pivot];
             }
             if (k < pivot) {
-                high = pivot - 1;
+                right = pivot - 1;
             } else {
-                low = pivot + 1;
+                left = pivot + 1;
             }
         }
     }
@@ -25,26 +25,28 @@ class QuickSelect {
         nums[j] = tmp;
     }
 
-    private int partition(int[] nums, int low, int high) {
+    private int partition(int[] nums, int left, int right) {
+/* Uncomment the following to implement randomized quick select
         Random random = new Random();
-        int pivot = random.nextInt(high - low + 1) + low;
-        swap(nums, pivot, low);
-        int i = low + 1;
-        int j = high;
+        int pivot = random.nextInt(right - left + 1) + left;
+        swap(nums, pivot, left);
+*/
+        int l = left + 1;
+        int r = right;
         while (true) {
-            while (i <= high && nums[i] < nums[low]) {
-                i++;
+            while (l <= right && nums[l] < nums[left]) {
+                l++;
             }
-            while (j >= 0 && nums[j] > nums[low]) {
-                j--;
+            while (r >= left && nums[r] > nums[left]) {
+                r--;
             }
-            if (i >= j) {
-                swap(nums, low, j);
-                return j;
+            if (l >= r) {
+                swap(nums, left, r);
+                return r;
             }
-            swap(nums, i, j);
-            i++;
-            j--;
+            swap(nums, l, r);
+            l++;
+            r--;
         }
     }
 

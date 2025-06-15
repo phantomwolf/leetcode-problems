@@ -37,6 +37,6 @@ Constraints:
 
 
 ## Solution 1: count
-To group anagrams, the straightforward way is to hash each string into a key of an unordered_map.
+To group anagrams, the straightforward way is to hash each string into a key of a hash map.
 
-Since string can be used as key, we can convert each input string into a unique string key: length 26, each character is the count of an English letter. For example, key[0] is the count of 'a', and key[1] is the count of 'b'.
+Since string can be used as key, we can convert each input string into a unique string key: length 26, each character is the count of an English letter. For example, key[0] is the count of 'a', and key[1] is the count of 'b'. Apparently, this unique string key is probably not printable, but this doesn't affect the program.

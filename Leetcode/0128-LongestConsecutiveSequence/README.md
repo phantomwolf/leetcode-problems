@@ -46,6 +46,8 @@ First, we frequently search array to see if a number exists, which takes O(n) ti
 
 Second, for each number, we search for `number+1` inside the array. However, this is not always necessary. For example, if `number = 2`, we shouldn't start searching for 3 because `number-1 = 1` is also in the array: searching from `number = 1` will definitely generate a longer sequence. So we can check if `number-1` exists before searching: if yes, skip this number.
 
+Remember the input array might contain duplicates. Once all numbers are added to the hash set, iterate the hash set instead of the input array.
+
 Time complexity: O(n). This is because each sequence is only searched once.
 Space complexity: O(n).
 
