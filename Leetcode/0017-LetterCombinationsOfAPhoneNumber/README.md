@@ -1,5 +1,4 @@
-17. Letter Combinations of a Phone Number 
-=======================================================
+# 17. Letter Combinations of a Phone Number 
 Given a digit string, return all possible letter combinations that the number could represent.
 
 A mapping of digit to letters (just like on the telephone buttons) is given below::
@@ -9,14 +8,26 @@ A mapping of digit to letters (just like on the telephone buttons) is given belo
     7(pqrs)     8(tuv)      9(wxyz)
     *           0           #
 
-Input:Digit string "23"
-Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Example 1:
 
-Note:
-    Although the above answer is in lexicographical order, your answer could be in any order you want. 
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
 
-分析
---------------------------
+Example 2:
+
+Input: digits = ""
+Output: []
+
+Example 3:
+
+Input: digits = "2"
+Output: ["a","b","c"]
+
+Constraints:
+    0 <= digits.length <= 4
+    digits[i] is a digit in the range ['2', '9'].
+
+## 分析
 将所有可能的分支画出来，会得到一棵三叉树。例如对于输入"23"::
 
                     ROOT
