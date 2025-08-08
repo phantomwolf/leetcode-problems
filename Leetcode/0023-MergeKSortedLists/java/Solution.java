@@ -1,45 +1,31 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- * int val;
- * ListNode next;
- * ListNode() {}
- * ListNode(int val) { this.val = val; }
- * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Pair {
-    public int val;
-    public ListNode node;
-
-    public Pair(int val, ListNode node) {
-        this.val = val;
-        this.node = node;
-    }
-}
-
-public class Solution {
+class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode dummy = new ListNode();
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> {
             return a.val - b.val;
         });
-        // Add the first node of each list into priority queue
-        for (ListNode p : lists) {
-            if (p != null) {
-                pq.add(new Pair(p.val, p));
+        ListNode dummy = new ListNode();
+        // Add initial k nodes into pq
+        for (ListNode node : lists) {
+            if (node != null) {
+                pq.add(node);
             }
         }
-        ListNode p = dummy;
+        ListNode node = dummy;
         while (!pq.isEmpty()) {
-            Pair pair = pq.remove();
-            // Add this node to result
-            p.next = pair.node;
-            p = p.next;
-            // Add next node into priority queue
-            ListNode next = pair.node.next;
-            if (next != null) {
-                pq.add(new Pair(next.val, next));
+            node.next = pq.remove();
+            node = node.next;
+            if (node.next != null) {
+                pq.add(node.next);
             }
         }
         return dummy.next;
