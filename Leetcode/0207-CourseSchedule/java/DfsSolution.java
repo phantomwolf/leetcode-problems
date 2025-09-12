@@ -1,46 +1,50 @@
 class DfsSolution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        // Create a HashMap
-        List<Integer>[] edges = new LinkedList[numCourses];
-        for (int i = 0; i < edges.length; i++) {
-            edges[i] = new LinkedList<Integer>();
+        // Build graph
+        List<Integer>[] graph = new ArrayList[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            graph[i] = new ArrayList<Integer>();
         }
+        // Add edges
         for (int[] pre : prerequisites) {
-            int from = pre[1];
-            int to = pre[0];
-            edges[from].add(to);
+            int from = pre[0];
+            int to = pre[1];
+            // edge means "depends on"
+            graph[from].add(to);
         }
+
+        // Cycle detection
         boolean[] visited = new boolean[numCourses];
         boolean[] onPath = new boolean[numCourses];
-        for (int n = 0; n < numCourses; n++) {
-            if (canFinish(edges, n, visited, onPath) == false) {
+        for (int node = 0; node < numCourses; node++) {
+            if (hasCycle(graph, node, visited, onPath)) {
+                // Cycle detected. Can not finish courses.
                 return false;
             }
         }
         return true;
     }
 
-    private boolean canFinish(List<Integer>[] edges, int course, boolean[] visited, boolean[] onPath) {
-        if (onPath[course]) {
+    // DFS
+    private boolean hasCycle(List<Integer>[] graph, int node, boolean[] visited, boolean[] onPath) {
+        if (onPath[node]) {
             // Cycle detected
-            return false;
-        }
-        if (visited[course]) {
-            // Skip
             return true;
         }
-        onPath[course] = true;
-        visited[course] = true;
-        // Post-order traversal
-        List<Integer> edgeList = edges[course];
-        for (int dependent : edgeList) {
-            boolean ret = canFinish(edges, dependent, visited, onPath);
-            if (ret == false) {
-                // Cycle detected recursively
-                return false;
+        if (visited[node]) {
+            // Skip visited node
+            return false;
+        }
+        visited[node] = true;
+        onPath[node] = true;
+        // Visit neighbors
+        for (int neighbor : graph[node]) {
+            boolean res = hasCycle(graph, neighbor, visited, onPath);
+            if (res) {
+                return true;
             }
         }
-        onPath[course] = false;
-        return true;
+        onPath[node] = false;
+        return false;
     }
 }

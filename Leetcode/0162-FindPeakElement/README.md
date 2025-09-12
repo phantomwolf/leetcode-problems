@@ -26,12 +26,21 @@ Constraints:
 * nums[i] != nums[i + 1] for all valid i.
 
 ## Solution: binary search
-First of all, the peak definitely exist, because nums[-1] = nums[n] = -∞. This means any nums[i], 0 <= i < n will be greater than nums[-1] and nums[n].
+First of all, the peak definitely exist, because `nums[-1] = nums[n] = -∞`. This means any `nums[i], 0 <= i < n` will be greater than nums[-1] and nums[n].
 
-In binary search, how do we determine whether to continue searching to the left or right? Simply compare nums[mid] and nums[mid+1]. If nums[mid] > nums[mid+1], the elements near mid will look like:
+In binary search, let `mid = left + (right - left) / 2`. Calculate the previous and next elements of `nums[mid]`:
+
+* `prev = nums[mid-1]` if `i >= 0`; otherwise, `prev = INT_MIN`.
+* `next = nums[mid+1]` if `i+1 < nums.length`; otherwise, `next = INT_MIN`.
+
+For every `mid`, first check if we've find the peak element: if `nums[mid]` is greater than both `prev` and `next`, `nums[mid]` is a peak.
+
+Now, how do we determine whether to continue searching to the left or right?
+
+* If `prev > nums[mid]`, there must be at least one peak element on the left. Let `right = mid-1` and continue searching.
+* If `next > nums[mid]`, there must be at least one peak element on the right. Let `left = mid+1` and continue searching.
+
+The image below depicts the case that `prev > nums[mid]`. Since `nums[-1] = -∞`, there must be at least one peak value between nums[-1] and nums[mid].
 
 ![mid](162-FindPeakElement.png)
 
-It's pretty clear that there must be at least one peak within range [l, mid], including nums[mid] itself. So we continue searching on the left side.
-
-Otherwise, continue searching on the right side [mid+1, r].

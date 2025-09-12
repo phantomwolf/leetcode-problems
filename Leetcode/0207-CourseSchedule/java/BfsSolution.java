@@ -1,48 +1,49 @@
 package main;
 
 class BfsSolution {
-    // BFS
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        // In degree
-        int[] indegrees = new int[numCourses];
         // Build graph
-        List<Integer>[] graph = new LinkedList[numCourses];
-        for (int v = 0; v < numCourses; v++) {
-            graph[v] = new LinkedList<>();
+        List<Integer>[] graph = new ArrayList[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            graph[i] = new ArrayList<Integer>();
         }
         // Add edges
+        int[] indegrees = new int[numCourses];
         for (int[] pre : prerequisites) {
-            int from = pre[1];
-            int to = pre[0];
-            graph[from].add(to);
+            int from = pre[0];
+            int to = pre[1];
+            // edge means "depends on"
             indegrees[to]++;
+            graph[from].add(to);
         }
+
         // BFS
-        Queue<Integer> q = new LinkedList<>();
-        // Enqueue all vertice with 0 in-degree
-        for (int v = 0; v < numCourses; v++) {
-            if (indegrees[v] == 0) {
-                q.add(v);
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        // Enqueue all nodes with 0 indegree
+        for (int i = 0; i < numCourses; i++) {
+            if (indegrees[i] == 0) {
+                queue.add(i);
             }
         }
-        int count = 0; // How many vertice have been visited?
-        while (!q.isEmpty()) {
-            int v = q.poll();
-            count++;
-            // Reduce in-degrees of its neighbors
-            for (int u : graph[v]) {
-                indegrees[u]--;
-                if (indegrees[u] == 0) {
-                    // Vertex u has 0 in-degree now. No vertex depends on it. We can visit it now.
-                    q.add(u);
+
+        // Track number of nodes visited
+        int visited = 0;
+        while (!queue.isEmpty()) {
+            int node = queue.remove();
+            visited++;
+            // Reduce indegrees
+            for (int neighbor : graph[node]) {
+                indegrees[neighbor]--;
+                if (indegrees[neighbor] == 0) {
+                    queue.add(neighbor);
                 }
             }
         }
-        if (count == numCourses) {
-            // All vertice have been visited. No cycle.
-            return true;
+        // Check if all nodes are visited
+        if (visited < numCourses) {
+            // Not all nodes visited. Cycle detected.
+            return false;
         }
-        return false;
+        return true;
     }
-
 }

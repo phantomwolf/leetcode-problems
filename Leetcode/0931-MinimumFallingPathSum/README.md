@@ -25,7 +25,14 @@ Explanation: The falling path with a minimum sum is shown.
 - 1 <= n <= 100
 - -100 <= matrix[i][j] <= 100
 
-# Space-optimized DP solution
+## Solution: Dynamic programming
+Define dp[i][j] as the min sum of any falling path that ends at matrix[i][j].
+
+Base case: `dp[0][j] = matrix[0][j]`
+
+Optimal substructure: `dp[i][j] = min(dp[i-1][j], dp[i-1][j-1], dp[i-1][j+1])`
+
+## Space-optimized DP solution
 观察DP Solution，可知求dp[i][j]时，我们只需要上一行的值：dp[i-1][j-1], dp[i-1][j], dp[i-1][j+1]。
 
 创建一维数组dp[]：dp[i-1][j-1]为dp[j-1]已被覆盖掉的旧值，所以我们需要一个变量来保存这个旧值；dp[i-1][j]即dp[j]未被覆盖前的值；dp[i-1][j+1]即dp[j+1]，因为其在循环的下一步才会被覆盖，可以直接用。

@@ -2,21 +2,20 @@ package CoinChange;
 
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        // Define dp[n] as the fewest number of coins needed to make up an amount of n
-        int[] dp = new int[amount + 1];
-        // Base case
-        dp[0] = 0;
-        // Dynamic programming
-        for (int n = 1; n <= amount; n++) {
-            int min = Integer.MAX_VALUE;
-            for (int c : coins) {
-                if (c > n || dp[n - c] == -1)
+        // dp[i]: the min number of coins that can make up amount `i`
+        int[] dp = new int[amount+1];
+        for (int i = 1; i <= amount; i++) {
+            dp[i] = Integer.MAX_VALUE;
+            for (int coin : coins) {
+                if (coin > i || dp[i - coin] == -1) {
+                    // Impossible to get amount `i` using this coin
                     continue;
-                int count = dp[n - c] + 1;
-                if (count < min)
-                    min = count;
+                }
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
             }
-            dp[n] = (min == Integer.MAX_VALUE) ? -1 : min;
+            if (dp[i] == Integer.MAX_VALUE) {
+                dp[i] = -1;
+            }
         }
         return dp[amount];
     }

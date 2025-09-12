@@ -21,3 +21,11 @@ Constraints:
 
 ## Solution: sort and merge
 First, sort all intervals by their left index, so that all intervals with overlaps will be adjacent. We only need to compare and merge adjacent intervals.
+
+There're 3 types of overlaps:
+
+1. Interval 1 completely contains interval 2: `[1, 4]` and `[2, 3]`.
+2. Interval 1 overlaps with interval 2: `[1, 3]` and `[2, 4]`.
+3. Interval 1's end equals interval 2's start: `[1, 2]` and `[2, 4]`.
+
+In all 3 cases, the merged new interval will be: `[interval1.start, max(interval1.end, interval2.end)]`.

@@ -1,6 +1,0 @@
-14 Longest Common Prefix
-Write a function to find the longest common prefix string amongst an array of strings.
-
-Solution:
-Use a int to record the length of the longest common prefix.
-At the beginning, it's the length of the first string. Then, compare the other strings with the first one.

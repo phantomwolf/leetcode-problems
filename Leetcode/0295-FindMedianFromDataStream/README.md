@@ -45,7 +45,7 @@ We can do insertion sort to the input. Each time `addNum` is called, insert the 
 * `findMedian` will be fast: time complexity O(1).
 * `addNum` will be slow: time complexity O(n). Suppose there're n elements, so the total time complexity for adding all of them is O(n^2).
 
-## Solution 2: two heaps
+## Solution 2: two heaps(recommended)
 Imagine spliting the input into 2 parts: all elements in left part are no greater than those in the right parts. If we can quickly find the greatest num in the left part and the smallest num in the right part, we can calculate the median immediately.
 
 To achieve this, we use 2 heaps to store the inputs: `leftHeap` is a max heap and represents the left part; `rightHeap` is a min heap and represents the right part. We also limit the sizes of the two heaps: `leftHeap.size() == rightHeap.size()` or `leftHeap.size() == rightHeap.size()+1`. When the heap sizes don't fulfill the limitation, `balance()` operation is done to move some nums from one heap to another.
