@@ -34,3 +34,15 @@ Constraints:
 * At most 104 calls will be made to addWord and search.
 
 ## Solution: Trie + DFS
+Add words into a Trie for query.
+
+For English letter, just go to that direction.
+
+For wildcard '.', go all directions by 1 step.
+
+For wildcard '*', there're 2 cases:
+
+1. * matches 0 characters: `dfs(pattern, i+1, node, memo)`
+2. * matches 1 character in this recursive call: `dfs(pattern, i, node.children[c], memo)`
+
+Remember to use a memo to cache the results.

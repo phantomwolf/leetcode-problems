@@ -9,6 +9,7 @@ class TrieNode {
 }
 
 public class WordDictionary {
+    private int count = 0;
     private TrieNode root;
 
     public WordDictionary() {
@@ -47,6 +48,7 @@ public class WordDictionary {
         // Query memo
         MemoKey memoKey = new MemoKey(node, i);
         if (memo.containsKey(memoKey)) {
+            count++;
             return memo.get(memoKey);
         }
 
@@ -114,6 +116,7 @@ public class WordDictionary {
                 throw new Exception(String.format("Pattern '%s' should return %s, actual %s", tc.pattern(), tc.expected(), res));
             }
         }
+        System.out.println(wordDictionary.count);
         System.out.println("All tests passed!");
     }
 }
