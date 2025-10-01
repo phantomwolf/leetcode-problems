@@ -21,9 +21,9 @@ Constraints:
 * 1 <= nums.length <= 104
 * -109 <= nums[i] <= 109
 
-## Solution: monotone stack
+## Solution: monotonic stack
 This problem is a bit different from ordinary "Next Greater Element" problem, as **nums** is a circular array. Tips:
 
+* Fill in the answer[] array with -1 initially
 * We can use mod(%) operator to make an array "circular": index % len(nums)
 * By iterating the nums array twice, we guarantee that each element will meat their next greater element(if any)
-* Fill in the answer[] array with -1 initially
